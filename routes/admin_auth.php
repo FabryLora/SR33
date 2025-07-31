@@ -165,7 +165,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::delete('admin/slider/destroy', [SliderController::class, 'destroy'])->name('admin.slider.destroy');
     Route::post('admin/slider/store', [SliderController::class, 'store'])->name('admin.slider.store');
 
-    Route::post('cambiarPrecios', [ImportController::class, 'importar'])->name('cambiarPrecios');
+    Route::post('cambiarPrecios', action: [ImportController::class, 'importar'])->name('cambiarPrecios');
 
     Route::get('admin/productos-zonaprivada', [ProductoController::class, 'productoszonaprivada'])->name('admin.productos.productoszonaprivada');
 

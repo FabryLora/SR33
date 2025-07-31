@@ -6,7 +6,9 @@
             <h2 class="text-[24px] font-bold text-primary-orange border-b pb-1">Por tipo de producto</h2>
             <div class="flex flex-col gap-2">
                 <label for="tipo" class="text-[16px]">Tipo de producto</label>
-                <select class="rounded-sm bg-white p-2" name="" id="tipo">
+                <select
+                    class="rounded-sm bg-white p-2 outline-transparent focus:outline focus:outline-primary-orange transition duration-300"
+                    name="" id="tipo">
                     <option value="">Elegir tipo</option>
                     @foreach ($categorias as $categoria)
                         <option value="{{ $categoria->id }}">{{ $categoria->name }}</option>
@@ -19,7 +21,9 @@
             <div class="flex flex-row gap-6">
                 <div class="flex flex-col gap-2 w-full">
                     <label for="marca" class="text-[16px]">Marca</label>
-                    <select class="rounded-sm bg-white p-2" name="" id="marca">
+                    <select
+                        class="rounded-sm bg-white p-2 outline-transparent focus:outline focus:outline-primary-orange transition duration-300"
+                        name="" id="marca">
                         <option value="">Elegir marca</option>
                         @foreach ($marcas as $marca)
                             <option value="{{ $marca->id }}">{{ $marca->name }}</option>
@@ -29,7 +33,9 @@
 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="modelo" class="text-[16px]">Modelo</label>
-                    <select class="rounded-sm bg-white p-2" name="" id="modelo">
+                    <select
+                        class="rounded-sm bg-white p-2 outline-transparent focus:outline focus:outline-primary-orange transition duration-300"
+                        name="" id="modelo">
                         <option value="">Elegir modelo</option>
                         @foreach ($modelos as $modelo)
                             <option value="{{ $modelo->id }}">{{ $modelo->name }}</option>
@@ -40,14 +46,16 @@
 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="codigo_original" class="text-[16px]">Código Original</label>
-                    <input type="text" class="rounded-sm bg-white p-2" id="codigo_original" name="codigo_original"
-                        placeholder="Ingrese código original">
+                    <input type="text"
+                        class="rounded-sm bg-white p-2 outline-transparent focus:outline focus:outline-primary-orange transition duration-300"
+                        id="codigo_original" name="codigo_original" placeholder="Ingrese código original">
                 </div>
 
                 <div class="flex flex-col gap-2 w-full">
                     <label for="codigo_sr" class="text-[16px]">Código SR33</label>
-                    <input type="text" class="rounded-sm bg-white p-2" id="codigo_sr" name="codigo_sr"
-                        placeholder="Ingrese código sr33">
+                    <input type="text"
+                        class="rounded-sm bg-white p-2 outline-transparent focus:outline focus:outline-primary-orange transition duration-300"
+                        id="codigo_sr" name="codigo_sr" placeholder="Ingrese código sr33">
                 </div>
             </div>
 

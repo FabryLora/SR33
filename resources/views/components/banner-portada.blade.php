@@ -12,8 +12,8 @@
                 class="custom-container w-full h-full prose prose-sm sm:prose lg:prose-lg xl:prose-xl text-white max-md:p-6">
                 {!! $bannerPortada->text ?? '' !!}
             </div>
-            <a {{-- href="{{ route('nosotros') }}" --}}
-                class="py-2 px-6 bg-primary-orange text-white rounded-sm font-bold w-fit text-primary-red flex justify-center items-center hover:bg-gray-100 transition-colors duration-300">
+            <a href="{{ route('nosotros') }}"
+                class="py-2 px-6 bg-primary-orange text-white rounded-sm font-bold w-fit text-primary-red flex justify-center items-center hover:bg-white hover:text-primary-orange transition-colors duration-300">
                 Más info
             </a>
         </div>

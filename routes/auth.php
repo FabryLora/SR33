@@ -10,11 +10,13 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ListaDePreciosController;
+use App\Http\Controllers\MargenesController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\PedidoProductoController;
 use App\Http\Controllers\PrivadaController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\SendPedidoController;
+use App\Models\Categoria;
 use App\Models\InformacionDePago;
 use Illuminate\Support\Facades\Route;
 
@@ -65,9 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::middleware('privada')->group(function () {
         Route::get('privada/productos', [ProductoController::class, 'indexPrivada'])->name('index.privada.productos');
         Route::get('privada/carrito', [PrivadaController::class, 'carrito']);
-        Route::get('privada/margenes', function () {
-            return inertia('privada/margenes');
-        })->name('margenes');
+
         Route::get('privada/informacion-de-pagos', function () {
             $informacion = InformacionDePago::first();
             return inertia('privada/informacion', [
@@ -86,8 +86,12 @@ Route::middleware('auth')->group(function () {
 
         Route::post('recomprar', [PedidoController::class, 'recomprar'])
             ->name('recomprar');
+
+        Route::get('privada/margenes', [MargenesController::class, 'index'])->name('margenes');
     });
 
+    Route::put('/margenes/actualizar', [MargenesController::class, 'actualizarMargen'])->name('margenes.actualizar');
+    Route::post('/margenes/guardar', [MargenesController::class, 'guardarMargenes'])->name('margenes.guardar');
 
 
     Route::post('sendPedido', [SendPedidoController::class, 'sendReactEmail'])

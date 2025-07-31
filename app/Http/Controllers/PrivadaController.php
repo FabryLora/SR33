@@ -26,11 +26,12 @@ class   PrivadaController extends Controller
         $informacion = InformacionImportante::first();
         $carrito = Cart::content();
 
+
         // Extraer los IDs de los productos del carrito
         $productosIds = $carrito->pluck('id')->toArray();
 
         // Traer todos los productos con esos IDs
-        $productos = Producto::whereIn('id', $productosIds)->with(['imagenes', 'marcas', 'modelos', 'precio'])->get();
+        $productos = Producto::whereIn('id', $productosIds)->with(['imagenes', 'marca', 'modelo', 'precio', 'categoria'])->get();
 
         $productosConRowId = $productos->map(function ($producto) use ($carrito) {
             // Buscar el item del carrito que corresponde a este producto
@@ -62,6 +63,8 @@ class   PrivadaController extends Controller
         $descuento_dos = auth()->user()->rol == "cliente" ? auth()->user()->descuento_dos : session('cliente_seleccionado')->descuento_dos ?? 0;
         $descuento_tres = auth()->user()->rol == "cliente" ? auth()->user()->descuento_tres : session('cliente_seleccionado')->descuento_tres ?? 0;
 
+
+
         // Calcular subtotal con descuentos aplicados en orden
         $subtotal_descuento = $subtotalTotal;
 
@@ -89,6 +92,8 @@ class   PrivadaController extends Controller
 
         $categorias = Categoria::orderBy('order', 'asc')->get();
         $subcategorias = SubCategoria::orderBy('order', 'asc')->get();
+
+
 
         return inertia('privada/carrito', [
             'informacion' => $informacion,

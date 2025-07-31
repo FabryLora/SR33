@@ -13,7 +13,7 @@
         <div class="flex flex-row max-sm:flex-col gap-6 max-sm:gap-4">
             @foreach($novedades as $novedad)
                 <a href="{{ url('/novedades/' . $novedad->id) }}"
-                    class="flex flex-col gap-2 max-w-[392px] h-[560px] border rounded-sm">
+                    class="flex flex-col gap-2 max-w-[392px] h-[560px] border rounded-sm transition transform hover:-translate-y-1 hover:shadow-lg duration-300">
                     <div class="max-w-[391px] min-h-[321px] rounded-t-sm">
                         <img src="{{ $novedad->image }}" alt="{{ $novedad->title }}"
                             class="h-full w-full object-cover rounded-t-sm">

@@ -57,7 +57,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        session()->forget('cliente_seleccionado');
         Auth::guard('web')->logout();
 
         return Inertia::location('/');

@@ -204,12 +204,18 @@ export default function MispedidosRow({ pedido }) {
                     $ {Number(pedido?.total).toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                 </div>
                 <div className="flex items-center">
-                    <button onClick={() => setDetalleView(true)} className="bg-primary-orange h-10 w-full min-w-[138px] font-bold text-white">
+                    <button
+                        onClick={() => setDetalleView(true)}
+                        className="bg-primary-orange h-10 w-full min-w-[138px] rounded-sm font-bold text-white"
+                    >
                         Ver detalles
                     </button>
                 </div>
                 <div className="flex items-center">
-                    <button onClick={recomprar} className="border-primary-orange text-primary-orange h-10 w-full min-w-[138px] border font-medium">
+                    <button
+                        onClick={recomprar}
+                        className="border-primary-orange text-primary-orange h-10 w-full min-w-[138px] rounded-sm border font-medium"
+                    >
                         Recomprar
                     </button>
                 </div>

@@ -35,7 +35,9 @@ export default function ListaDePreciosRow({ lista }) {
                 </div>
                 <div className="flex items-center max-sm:mt-2 max-sm:justify-center">
                     <a href={lista?.archivo} target="_blank" rel="noopener noreferrer" className="block w-full max-sm:w-auto">
-                        <button className="bg-primary-orange h-10 w-full min-w-[138px] font-bold text-white max-sm:px-6">Ver Online</button>
+                        <button className="bg-primary-orange h-10 w-full min-w-[138px] rounded-sm font-bold text-white max-sm:px-6">
+                            Ver Online
+                        </button>
                     </a>
                 </div>
             </div>

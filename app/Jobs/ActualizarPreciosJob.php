@@ -56,7 +56,7 @@ class ActualizarPreciosJob implements ShouldQueue
 
             Log::info("Procesando - Código: '{$codigo}', Precio: '{$precio}'");
 
-            $producto = Producto::where('code', $codigo)->first();
+            $producto = Producto::where('code_sr', $codigo)->first();
 
             if (!$producto) {
                 Log::warning("Producto no encontrado con código: {$codigo}");

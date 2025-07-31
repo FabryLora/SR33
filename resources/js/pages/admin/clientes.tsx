@@ -1,13 +1,12 @@
 import ClientesAdminRow from '@/components/clientesAdminRow';
 import { router, useForm, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
-import Select from 'react-select';
 import Dashboard from './dashboard';
 
 export default function Clientes() {
-    const { clientes, provincias, vendedores, listas, sucursales } = usePage().props;
+    const { clientes, provincias, listas } = usePage().props;
 
     const { data, setData, post, reset } = useForm({
         name: '',
@@ -29,16 +28,17 @@ export default function Clientes() {
         lista_de_precios_id: '',
         rol: 'cliente',
         autorizado: 1,
-        sucursales: [],
     });
 
     const signup = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         signupForm.post(route('register'), {
             onSuccess: () => {
+                toast.success('Cliente registrado correctamente');
                 setCreateView(false);
             },
             onError: (error) => {
+                toast.error('Error al registrar el cliente');
                 console.error('Error al registrar el cliente:', error);
             },
         });
@@ -48,14 +48,6 @@ export default function Clientes() {
     const [createView, setCreateView] = useState(false);
     const [subirView, setSubirView] = useState(false);
     const [archivo, setArchivo] = useState();
-    const [sucursalesSelected, setSucursalesSelected] = useState([]);
-
-    useEffect(() => {
-        signupForm.setData(
-            'sucursales',
-            sucursalesSelected.map((m) => m.value),
-        );
-    }, [sucursalesSelected]);
 
     // Manejadores para la paginación del backend
     const handlePageChange = (page) => {
@@ -173,39 +165,6 @@ export default function Clientes() {
                                     </div>
 
                                     <div className="flex flex-col gap-2">
-                                        <label htmlFor="email2">Email 2</label>
-                                        <input
-                                            onChange={(ev) => signupForm.setData('email_dos', ev.target.value)}
-                                            className="focus:outline-primary-orange h-[45px] w-full pl-3 outline-1 outline-[#DDDDE0] transition duration-300"
-                                            type="email2"
-                                            name="email2"
-                                            id="email2"
-                                        />
-                                    </div>
-
-                                    <div className="flex flex-col gap-2">
-                                        <label htmlFor="email3">Email 3</label>
-                                        <input
-                                            onChange={(ev) => signupForm.setData('email_tres', ev.target.value)}
-                                            className="focus:outline-primary-orange h-[45px] w-full pl-3 outline-1 outline-[#DDDDE0] transition duration-300"
-                                            type="email3"
-                                            name="email3"
-                                            id="email3"
-                                        />
-                                    </div>
-
-                                    <div className="flex flex-col gap-2">
-                                        <label htmlFor="email4">Email 4</label>
-                                        <input
-                                            onChange={(ev) => signupForm.setData('email_cuatro', ev.target.value)}
-                                            className="focus:outline-primary-orange h-[45px] w-full pl-3 outline-1 outline-[#DDDDE0] transition duration-300"
-                                            type="email4"
-                                            name="email4"
-                                            id="email4"
-                                        />
-                                    </div>
-
-                                    <div className="flex flex-col gap-2">
                                         <label htmlFor="razon social">Razon social</label>
                                         <input
                                             onChange={(ev) => signupForm.setData('razon_social', ev.target.value)}
@@ -272,26 +231,6 @@ export default function Clientes() {
                                         </select>
                                     </div>
 
-                                    <div className="flex flex-col gap-2">
-                                        <label htmlFor="vendedor">Vendedor</label>
-                                        <select
-                                            onChange={(ev) => signupForm.setData('vendedor_id', ev.target.value)}
-                                            className="focus:outline-primary-orange h-[45px] w-full pl-3 outline-1 outline-[#DDDDE0] transition duration-300"
-                                            name="vendedor_id"
-                                            id="vendedor_id"
-                                        >
-                                            <option disabled selected value="">
-                                                Selecciona un vendedor
-                                            </option>
-
-                                            {vendedores?.map((vendedor) => (
-                                                <option key={vendedor.id} value={vendedor.id}>
-                                                    {vendedor.name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </div>
-
                                     <div className="col-span-2 grid grid-cols-3 gap-4">
                                         <div className="flex flex-col gap-2">
                                             <label htmlFor="descuento_uno">Descuento 1</label>
@@ -323,21 +262,6 @@ export default function Clientes() {
                                                 id="descuento_tres"
                                             />
                                         </div>
-                                    </div>
-
-                                    <div className="col-span-2 flex flex-col gap-2">
-                                        <label htmlFor="sucursal">Sucursales</label>
-                                        <Select
-                                            options={sucursales?.map((sucursal) => ({
-                                                value: sucursal.id,
-                                                label: sucursal.name,
-                                            }))}
-                                            onChange={(options) => setSucursalesSelected(options)}
-                                            className=""
-                                            name="sucursal"
-                                            id="sucursal"
-                                            isMulti
-                                        />
                                     </div>
 
                                     <div className="flex flex-col gap-2">
@@ -494,10 +418,8 @@ export default function Clientes() {
                                     <td className="text-left">EMAIL</td>
                                     <td className="py-2 text-left">PROVINCIA</td>
                                     <td className="text-left">LOCALIDAD</td>
-                                    <td className="text-left">VENDEDOR</td>
                                     <td className="text-center">LISTA</td>
                                     <td className="text-center">AUTORIZADO</td>
-
                                     <td className="text-center">EDITAR</td>
                                 </tr>
                             </thead>

@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-import logo from '../../../images/logos/logotb-azul.png';
+import logo from '../../../images/logos/logo-sr33.png';
 
 /* import bronzenLogo from "../assets/logos/bronzen-logo.png"; */
 
@@ -109,8 +109,6 @@ export default function Dashboard({ children }) {
             href: '#',
             subHref: [
                 { title: 'Clientes', href: 'clientes' },
-                { title: 'Vendedores', href: 'vendedores' },
-                { title: 'Sucursales', href: 'sucursales' },
                 { title: 'Informacion de pagos', href: 'informacion-de-pago' },
                 { title: 'Pedidos', href: 'pedidos' },
                 { title: 'Carrito', href: 'carrito' },

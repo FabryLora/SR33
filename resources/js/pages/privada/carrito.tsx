@@ -117,16 +117,17 @@ export default function Carrito({
 
                 <div className="col-span-2 grid w-full items-start">
                     <div className="w-full">
-                        <div className="grid h-[52px] grid-cols-9 items-center bg-[#ECECEC] text-[16px] font-semibold max-sm:hidden">
-                            <p></p>
-                            <p>Código</p>
-                            <p>Código OEM</p>
-                            <p>Descripción</p>
-
-                            <p className="text-right">Precio</p>
-                            <p className="text-right">Cantidad</p>
-                            <p className="text-right">Subtotal</p>
-                            <p className="text-center">Stock</p>
+                        <div className="bg-primary-orange grid h-[52px] grid-cols-11 items-center rounded-t-sm text-white max-sm:hidden max-sm:h-[40px] max-sm:grid-cols-4 max-sm:text-[12px]">
+                            <p className="max-sm:hidden"></p>
+                            <p className="max-sm:hidden">Cód. SR</p>
+                            <p>Cód. Original</p>
+                            <p>Marca</p>
+                            <p className="">Modelo</p>
+                            <p className="text-center max-sm:hidden">Tipo de producto</p>
+                            <p className="text-right max-sm:hidden">Precio</p>
+                            <p className="text-center max-sm:hidden">Descuentos</p>
+                            <p className="text-right max-sm:hidden">Precio con descuento</p>
+                            <p className="text-center max-sm:hidden">Cantidad</p>
                             <p></p>
                         </div>
                         {productos?.map((producto) => <ProductosPrivadaRow key={producto?.id} producto={producto} />)}
@@ -137,15 +138,15 @@ export default function Carrito({
                     <div className="">
                         <Link
                             href={'/privada/productos'}
-                            className="border-primary-orange text-primary-orange hover:bg-primary-orange h-[47px] border px-5 py-2 font-semibold transition duration-300 hover:text-white"
+                            className="border-primary-orange text-primary-orange hover:bg-primary-orange h-[47px] rounded-sm border px-5 py-2 font-semibold transition duration-300 hover:text-white"
                         >
                             Agregar productos
                         </Link>
                     </div>
                 </div>
 
-                <div className="h-[206px] border max-sm:order-1 max-sm:col-span-2">
-                    <div className="bg-[#EAEAEA]">
+                <div className="h-[206px] rounded-sm border max-sm:order-1 max-sm:col-span-2">
+                    <div className="bg-primary-orange rounded-t-sm text-white">
                         <h2 className="p-3 text-xl font-bold">Informacion importante</h2>
                     </div>
                     <div
@@ -156,132 +157,9 @@ export default function Carrito({
                     ></div>
                 </div>
 
-                <div className="h-fit w-full border bg-gray-50 max-sm:order-3 max-sm:col-span-2">
-                    <div className="bg-[#EAEAEA] p-3">
-                        <h2 className="text-xl font-bold">Formas de pago</h2>
-                    </div>
-
-                    <div className="flex h-fit w-full flex-col justify-center gap-4 py-4 text-[18px] text-[#74716A]">
-                        {/* Opción: Retiro Cliente */}
-                        <div
-                            className={`flex cursor-pointer items-center justify-between rounded-lg pl-3`}
-                            onClick={() => {
-                                setSelected('Efectivo');
-                                setTipo_entrega('Efectivo');
-                            }}
-                        >
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={`h-5 w-5 rounded-full border-2 ${
-                                        selected === 'Efectivo' ? 'border-primary-orange flex items-center justify-center' : 'border-gray-400'
-                                    }`}
-                                >
-                                    {selected === 'Efectivo' && <div className="bg-primary-orange h-[10px] w-[10px] rounded-full"></div>}
-                                </div>
-                                <label className="cursor-pointer">Efectivo</label>
-                            </div>
-                        </div>
-
-                        {/* Opción: A convenir */}
-                        <div
-                            className={`flex cursor-pointer items-center rounded-lg pl-3`}
-                            onClick={() => {
-                                setSelected('Transferencia');
-                                setTipo_entrega('Transferencia');
-                            }}
-                        >
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={`h-5 w-5 rounded-full border-2 ${
-                                        selected === 'Transferencia' ? 'border-primary-orange flex items-center justify-center' : 'border-gray-400'
-                                    }`}
-                                >
-                                    {selected === 'Transferencia' && <div className="bg-primary-orange h-[10px] w-[10px] rounded-full"></div>}
-                                </div>
-                                <label className="cursor-pointer">Transferencia</label>
-                            </div>
-                        </div>
-
-                        <div
-                            className={`flex cursor-pointer items-center justify-between rounded-lg pl-3`}
-                            onClick={() => {
-                                setSelected('Depósito bancario');
-                                setTipo_entrega('Depósito bancario');
-                            }}
-                        >
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={`h-5 w-5 rounded-full border-2 ${
-                                        selected === 'Depósito bancario'
-                                            ? 'border-primary-orange flex items-center justify-center'
-                                            : 'border-gray-400'
-                                    }`}
-                                >
-                                    {selected === 'Depósito bancario' && <div className="bg-primary-orange h-[10px] w-[10px] rounded-full"></div>}
-                                </div>
-                                <label className="cursor-pointer">Depósito bancario</label>
-                            </div>
-                        </div>
-
-                        <div
-                            className={`flex cursor-pointer items-center justify-between rounded-lg pl-3`}
-                            onClick={() => {
-                                setSelected('Cheque');
-                                setTipo_entrega('Cheque');
-                            }}
-                        >
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={`h-5 w-5 rounded-full border-2 ${
-                                        selected === 'Cheque' ? 'border-primary-orange flex items-center justify-center' : 'border-gray-400'
-                                    }`}
-                                >
-                                    {selected === 'Cheque' && <div className="bg-primary-orange h-[10px] w-[10px] rounded-full"></div>}
-                                </div>
-                                <label className="cursor-pointer">Cheque</label>
-                            </div>
-                        </div>
-
-                        <div
-                            className={`flex cursor-pointer items-center justify-between rounded-lg pl-3`}
-                            onClick={() => {
-                                setSelected('Echeq');
-                                setTipo_entrega('Echeq');
-                            }}
-                        >
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className={`h-5 w-5 rounded-full border-2 ${
-                                        selected === 'Echeq' ? 'border-primary-orange flex items-center justify-center' : 'border-gray-400'
-                                    }`}
-                                >
-                                    {selected === 'Echeq' && <div className="bg-primary-orange h-[10px] w-[10px] rounded-full"></div>}
-                                </div>
-                                <label className="cursor-pointer">Echeq</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="flex h-[206px] flex-col gap-3 max-sm:order-2 max-sm:col-span-2">
-                    <div className="">
-                        <h2 className="text-xl font-bold">Escribinos un mensaje</h2>
-                    </div>
-                    <textarea
-                        onChange={(e) => {
-                            pedidoForm.setData('mensaje', e.target.value);
-                        }}
-                        className="h-[222px] w-full border p-3"
-                        name=""
-                        id=""
-                        rows={10}
-                        placeholder="Dias especiales de entrega, cambios de domicilio, expresos, requerimientos especiales en la mercaderia, exenciones."
-                    ></textarea>
-                </div>
-
-                <div className="h-fit w-full border bg-gray-50 max-sm:order-3 max-sm:col-span-2">
-                    <div className="bg-[#EAEAEA] p-3">
-                        <h2 className="text-xl font-bold">Formas de entrega</h2>
+                <div className="h-fit w-full rounded-sm border bg-gray-50 max-sm:order-3 max-sm:col-span-2">
+                    <div className="bg-primary-orange rounded-t-sm p-3 text-white">
+                        <h2 className="text-xl font-bold">Entrega</h2>
                     </div>
 
                     <div className="flex h-fit w-full flex-col justify-center gap-4 py-4 text-[18px] text-[#74716A]">
@@ -327,29 +205,24 @@ export default function Carrito({
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-3 max-sm:order-4 max-sm:col-span-2">
-                    <h2 className="text-2xl font-bold">Adjuntar un archivo</h2>
-                    <div className="flex w-full items-center justify-between border">
-                        <span className="pl-4 text-gray-600">{pedidoForm?.data?.archivo?.name}</span>
-                        <label
-                            htmlFor="fileInput"
-                            className="text-primary-orange h-full cursor-pointer bg-gray-100 p-4 font-semibold hover:bg-gray-200"
-                        >
-                            ADJUNTAR
-                        </label>
-                        <input
-                            type="file"
-                            id="fileInput"
-                            className="hidden"
-                            onChange={(e) => {
-                                pedidoForm.setData('archivo', e.target.files[0]);
-                            }}
-                        />
+                <div className="flex h-[206px] flex-col gap-3 max-sm:order-2 max-sm:col-span-2">
+                    <div className="">
+                        <h2 className="text-xl font-bold">Escribinos un mensaje</h2>
                     </div>
+                    <textarea
+                        onChange={(e) => {
+                            pedidoForm.setData('mensaje', e.target.value);
+                        }}
+                        className="h-[222px] w-full rounded-sm border p-3"
+                        name=""
+                        id=""
+                        rows={10}
+                        placeholder="Dias especiales de entrega, cambios de domicilio, expresos, requerimientos especiales en la mercaderia, exenciones."
+                    ></textarea>
                 </div>
 
-                <div className="h-fit border max-sm:order-5 max-sm:col-span-2">
-                    <div className="bg-[#EAEAEA]">
+                <div className="h-fit rounded-sm border max-sm:order-5 max-sm:col-span-2">
+                    <div className="bg-primary-orange rounded-t-sm text-white">
                         <h2 className="p-3 text-xl font-bold">Pedido</h2>
                     </div>
 
@@ -367,9 +240,12 @@ export default function Carrito({
 
                         {subtotal_descuento != subtotal && (
                             <div className="flex w-full flex-row justify-between">
-                                <p className="text-green-500">
-                                    Descuento {descuento_uno ? descuento_uno + '%' : ''} {descuento_dos ? descuento_dos + '%' : ''} +{' '}
-                                    {descuento_tres ? descuento_tres + '%' : ''}
+                                <p className="text-center text-green-500">
+                                    Descuento{' '}
+                                    {[user?.descuento_uno, user?.descuento_dos, user?.descuento_tres]
+                                        .filter(Boolean)
+                                        .map((descuento) => descuento + '%')
+                                        .join(' + ')}
                                 </p>
                                 <p className="text-green-500">
                                     -${' '}
@@ -405,20 +281,39 @@ export default function Carrito({
                         </p>
                     </div>
                 </div>
-                <div></div>
+                <div className="flex flex-col gap-3 rounded-sm max-sm:order-4 max-sm:col-span-2">
+                    <h2 className="text-2xl font-bold">Adjuntar un archivo</h2>
+                    <div className="flex w-full items-center justify-between rounded-sm border">
+                        <span className="pl-4 text-gray-600">{pedidoForm?.data?.archivo?.name}</span>
+                        <label
+                            htmlFor="fileInput"
+                            className="text-primary-orange h-full cursor-pointer rounded-r-sm bg-gray-100 p-4 font-semibold hover:bg-gray-200"
+                        >
+                            ADJUNTAR
+                        </label>
+                        <input
+                            type="file"
+                            id="fileInput"
+                            className="hidden"
+                            onChange={(e) => {
+                                pedidoForm.setData('archivo', e.target.files[0]);
+                            }}
+                        />
+                    </div>
+                </div>
 
                 <div className="flex w-full flex-row items-end gap-3 max-sm:order-6 max-sm:col-span-2">
                     <Link
                         href={route('destroy')}
                         method="post"
-                        className="border-primary-orange text-primary-orange flex h-[47px] w-full items-center justify-center border transition-transform hover:scale-95"
+                        className="border-primary-orange text-primary-orange flex h-[47px] w-full items-center justify-center rounded-sm border transition-transform hover:scale-95"
                     >
                         Cancelar pedido
                     </Link>
                     <button
                         disabled={pedidoForm.processing}
                         onClick={hacerPedido}
-                        className={`h-[47px] w-full text-white transition-transform hover:scale-95 ${pedidoForm.processing ? 'bg-gray-400' : 'bg-primary-orange'}`}
+                        className={`h-[47px] w-full rounded-sm text-white transition-transform hover:scale-95 ${pedidoForm.processing ? 'bg-gray-400' : 'bg-primary-orange'}`}
                     >
                         {pedidoForm.processing ? 'Enviando pedido...' : 'Realizar pedido'}
                     </button>

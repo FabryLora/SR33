@@ -45,16 +45,12 @@ class CartController extends Controller
             'price' => 'required|numeric|min:0',
         ]);
 
-        $tieneOfertaVigente = $producto->ofertas()
-            ->where('user_id', Auth::id())
-            ->where('fecha_fin', '>', now())
-            ->exists();
 
         Cart::add(
             $request->id,
             $request->name,
             $request->qty,
-            $tieneOfertaVigente ? $request->price * (1 - $producto->descuento_oferta / 100) : $producto->precio->precio, // Asegurarse de que el precio sea correcto
+            $producto->precio->precio, // Asegurarse de que el precio sea correcto
             0
         );
 

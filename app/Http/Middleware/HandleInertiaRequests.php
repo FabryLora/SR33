@@ -47,9 +47,14 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user() && $request->user()->rol == 'vendedor' ? $request->user()->load('clientes') : $request->user(),
             ],
             'clienteSeleccionado' => $request->session()->get('cliente_seleccionado'),
+            'margenes' => $request->session()->get('margenes', [
+                'general' => 0,
+                'tipos' => []
+            ]),
             'flash' => [
                 'pedido_id' => fn() => $request->session()->get('pedido_id'),
                 'message' => fn() => $request->session()->get('message'),
+
             ],
             'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),

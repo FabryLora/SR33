@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 /* import defaultPhoto from '../../images/defaultPhoto.png'; */
 
 export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) {
-    const { auth, ziggy } = usePage().props;
+    const { auth, ziggy, margenes } = usePage().props;
     const { user } = auth;
 
     const [cantidad, setCantidad] = useState(producto?.qty != 1 ? producto?.qty : producto?.unidad_pack);
@@ -76,33 +76,27 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
     return (
         <>
             {/* Vista desktop - tabla */}
-            <div className="grid h-fit grid-cols-9 items-center border-b border-gray-200 py-2 text-[15px] text-black max-sm:hidden">
-                <div className="h-[85px] w-[85px]">
+            <div className="grid h-fit grid-cols-11 items-center border-b border-gray-200 py-2 text-[15px] text-black max-sm:hidden">
+                <div className="h-[80px] w-[80px] rounded-sm border">
                     <img src={producto?.imagenes[0]?.image} className="h-full w-full object-contain" alt="" />
                 </div>
+                <p className="">{producto?.code_sr}</p>
                 <p className="">{producto?.code}</p>
+                <p className="">{producto?.marca?.name}</p>
+                <p className="">{producto?.modelo?.name}</p>
+                <p className="">{producto?.categoria?.name}</p>
+
                 {/* mostrar uno debajo del otro */}
-                <p className="">
-                    {producto?.code_oem?.split('/').map((item) => (
-                        <span key={item} className="block">
-                            {item}
-                        </span>
-                    ))}
-                </p>
-                <p className="">{producto?.name}</p>
 
                 {margenSwitch ? (
                     <div className="relative">
-                        {producto?.oferta == 1 && <p className="absolute -top-5 w-full text-right text-xs font-bold text-green-500">OFERTA</p>}
                         <p className="text-right">
                             ${' '}
                             {(
-                                Number(
-                                    producto?.oferta == 1
-                                        ? Number(producto?.precio?.precio) * (1 - Number(producto?.descuento_oferta) / 100)
-                                        : Number(producto?.precio?.precio),
-                                ) *
-                                (1 + Number(margen) / 100)
+                                Number(Number(producto?.precio?.precio)) *
+                                (1 + Number(margenes?.general ?? 0) / 100) *
+                                (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
+                                cantidad
                             )?.toLocaleString('es-AR', {
                                 maximumFractionDigits: 2,
                                 minimumFractionDigits: 2,
@@ -110,25 +104,72 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                         </p>
                         <p className="absolute w-full text-right text-gray-400 line-through">
                             ${' '}
-                            {Number(
-                                producto?.oferta == 1
-                                    ? Number(producto?.precio?.precio) * (1 + Number(producto?.descuento_oferta) / 100)
-                                    : Number(producto?.precio?.precio),
-                            )?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                            {Number(Number(producto?.precio?.precio))?.toLocaleString('es-AR', {
+                                maximumFractionDigits: 2,
+                                minimumFractionDigits: 2,
+                            })}
                         </p>
                     </div>
                 ) : (
                     <div className="relative">
-                        {producto?.oferta == 1 && <p className="absolute -top-5 w-full text-right text-xs font-bold text-green-500">OFERTA</p>}
                         <p className="text-right">
-                            ${' '}
-                            {Number(
-                                producto?.oferta == 1
-                                    ? Number(producto?.precio?.precio) * (1 + Number(producto?.descuento_oferta) / 100)
-                                    : producto?.precio?.precio,
-                            )?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                            $ {Number(producto?.precio?.precio)?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
                         </p>
                     </div>
+                )}
+
+                <p className="text-center text-green-500">
+                    {[user?.descuento_uno, user?.descuento_dos, user?.descuento_tres]
+                        .filter(Boolean)
+                        .map((descuento) => descuento + '%')
+                        .join(' + ')}
+                </p>
+
+                {margenSwitch ? (
+                    <div className="relative">
+                        <p className="text-right">
+                            ${' '}
+                            {(
+                                Number(producto?.precio?.precio) *
+                                cantidad *
+                                (1 + Number(margenes?.general ?? 0) / 100) *
+                                (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
+                                (1 - Number(user?.descuento_uno) / 100) *
+                                (1 - Number(user?.descuento_dos) / 100) *
+                                (1 - Number(user?.descuento_tres) / 100)
+                            ).toLocaleString('es-AR', {
+                                maximumFractionDigits: 2,
+                                minimumFractionDigits: 2,
+                            })}
+                        </p>
+                        <p className="absolute w-full text-right text-gray-400 line-through">
+                            ${' '}
+                            {(
+                                Number(Number(producto?.precio?.precio)) *
+                                (1 + Number(margenes?.general ?? 0) / 100) *
+                                (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
+                                cantidad
+                            )?.toLocaleString('es-AR', {
+                                maximumFractionDigits: 2,
+                                minimumFractionDigits: 2,
+                            })}
+                        </p>
+                    </div>
+                ) : (
+                    <p className="text-right">
+                        ${' '}
+                        {user?.descuento_uno &&
+                            (
+                                Number(producto?.precio?.precio) *
+                                cantidad *
+                                (1 - Number(user?.descuento_uno) / 100) *
+                                (1 - Number(user?.descuento_dos) / 100) *
+                                (1 - Number(user?.descuento_tres) / 100)
+                            ).toLocaleString('es-AR', {
+                                maximumFractionDigits: 2,
+                                minimumFractionDigits: 2,
+                            })}
+                    </p>
                 )}
 
                 <p className="flex justify-end">
@@ -154,45 +195,6 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                     </div>
                 </p>
 
-                {margenSwitch ? (
-                    <div className="relative">
-                        <p className="text-right">
-                            ${' '}
-                            {(
-                                Number(
-                                    producto?.oferta == 1
-                                        ? Number(producto?.precio?.precio) * cantidad * (1 - Number(producto?.descuento_oferta) / 100)
-                                        : Number(producto?.precio?.precio) * cantidad,
-                                ) *
-                                (1 + Number(margen) / 100)
-                            )?.toLocaleString('es-AR', {
-                                maximumFractionDigits: 2,
-                                minimumFractionDigits: 2,
-                            })}
-                        </p>
-                        <p className="absolute w-full text-right text-gray-400 line-through">
-                            ${' '}
-                            {Number(
-                                producto?.oferta == 1
-                                    ? Number(producto?.precio?.precio) * cantidad * (1 - Number(producto?.descuento_oferta) / 100)
-                                    : producto?.precio?.precio * cantidad,
-                            )?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
-                        </p>
-                    </div>
-                ) : (
-                    <p className="text-right">
-                        ${' '}
-                        {Number(
-                            producto?.oferta == 1
-                                ? Number(producto?.precio?.precio) * cantidad * (1 - Number(producto?.descuento_oferta) / 100)
-                                : producto?.precio?.precio * cantidad,
-                        )?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
-                    </p>
-                )}
-                <p className="flex justify-center">
-                    <div className="h-[12px] w-[12px] rounded-full bg-gray-200"></div>
-                </p>
-
                 <p className="flex justify-center">
                     {ziggy.location.includes('carrito') ? (
                         <button type="button" onClick={removeFromCart} className="">
@@ -214,12 +216,25 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                             </svg>
                         </button>
                     ) : (
-                        <button onClick={addToCart} className="">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22" viewBox="0 0 24 22" fill="none">
-                                <path
-                                    d="M0 0H4.764L5.309 2H23.387L19.721 13H7.78L7.28 15H22V17H4.72L5.966 12.011L3.236 2H0V0ZM4 20C4 19.4696 4.21071 18.9609 4.58579 18.5858C4.96086 18.2107 5.46957 18 6 18C6.53043 18 7.03914 18.2107 7.41421 18.5858C7.78929 18.9609 8 19.4696 8 20C8 20.5304 7.78929 21.0391 7.41421 21.4142C7.03914 21.7893 6.53043 22 6 22C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20ZM18 20C18 19.4696 18.2107 18.9609 18.5858 18.5858C18.9609 18.2107 19.4696 18 20 18C20.5304 18 21.0391 18.2107 21.4142 18.5858C21.7893 18.9609 22 19.4696 22 20C22 20.5304 21.7893 21.0391 21.4142 21.4142C21.0391 21.7893 20.5304 22 20 22C19.4696 22 18.9609 21.7893 18.5858 21.4142C18.2107 21.0391 18 20.5304 18 20Z"
-                                    fill="#0072C6"
-                                />
+                        <button
+                            onClick={addToCart}
+                            className="border-primary-orange flex h-[36px] w-[36px] items-center justify-center rounded-sm border transition duration-300 hover:scale-95 hover:shadow-sm"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <g clip-path="url(#clip0_9500_465)">
+                                    <path
+                                        d="M1.36621 1.36667H2.69954L4.47288 9.64667C4.53793 9.94991 4.70666 10.221 4.95002 10.4132C5.19338 10.6055 5.49615 10.7069 5.80621 10.7H12.3262C12.6297 10.6995 12.9239 10.5955 13.1602 10.4052C13.3966 10.2149 13.561 9.94969 13.6262 9.65334L14.7262 4.7H3.41288M5.99954 14C5.99954 14.3682 5.70107 14.6667 5.33288 14.6667C4.96469 14.6667 4.66621 14.3682 4.66621 14C4.66621 13.6318 4.96469 13.3333 5.33288 13.3333C5.70107 13.3333 5.99954 13.6318 5.99954 14ZM13.3329 14C13.3329 14.3682 13.0344 14.6667 12.6662 14.6667C12.298 14.6667 11.9995 14.3682 11.9995 14C11.9995 13.6318 12.298 13.3333 12.6662 13.3333C13.0344 13.3333 13.3329 13.6318 13.3329 14Z"
+                                        stroke="#0992C9"
+                                        stroke-width="1.5"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    />
+                                </g>
+                                <defs>
+                                    <clipPath id="clip0_9500_465">
+                                        <rect width="16" height="16" fill="white" />
+                                    </clipPath>
+                                </defs>
                             </svg>
                         </button>
                     )}
@@ -387,11 +402,21 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                             </button>
                         ) : (
                             <button onClick={addToCart} className="rounded p-2 text-blue-600 hover:bg-blue-50">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="18" viewBox="0 0 24 22" fill="none">
-                                    <path
-                                        d="M0 0H4.764L5.309 2H23.387L19.721 13H7.78L7.28 15H22V17H4.72L5.966 12.011L3.236 2H0V0ZM4 20C4 19.4696 4.21071 18.9609 4.58579 18.5858C4.96086 18.2107 5.46957 18 6 18C6.53043 18 7.03914 18.2107 7.41421 18.5858C7.78929 18.9609 8 19.4696 8 20C8 20.5304 7.78929 21.0391 7.41421 21.4142C7.03914 21.7893 6.53043 22 6 22C5.46957 22 4.96086 21.7893 4.58579 21.4142C4.21071 21.0391 4 20.5304 4 20ZM18 20C18 19.4696 18.2107 18.9609 18.5858 18.5858C18.9609 18.2107 19.4696 18 20 18C20.5304 18 21.0391 18.2107 21.4142 18.5858C21.7893 18.9609 22 19.4696 22 20C22 20.5304 21.7893 21.0391 21.4142 21.4142C21.0391 21.7893 20.5304 22 20 22C19.4696 22 18.9609 21.7893 18.5858 21.4142C18.2107 21.0391 18 20.5304 18 20Z"
-                                        fill="currentColor"
-                                    />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <g clip-path="url(#clip0_9500_971)">
+                                        <path
+                                            d="M1.36621 1.36667H2.69954L4.47288 9.64667C4.53793 9.94991 4.70666 10.221 4.95002 10.4132C5.19338 10.6055 5.49615 10.7069 5.80621 10.7H12.3262C12.6297 10.6995 12.9239 10.5955 13.1602 10.4052C13.3966 10.2149 13.561 9.94969 13.6262 9.65334L14.7262 4.7H3.41288M5.99954 14C5.99954 14.3682 5.70107 14.6667 5.33288 14.6667C4.96469 14.6667 4.66621 14.3682 4.66621 14C4.66621 13.6318 4.96469 13.3333 5.33288 13.3333C5.70107 13.3333 5.99954 13.6318 5.99954 14ZM13.3329 14C13.3329 14.3682 13.0344 14.6667 12.6662 14.6667C12.298 14.6667 11.9995 14.3682 11.9995 14C11.9995 13.6318 12.298 13.3333 12.6662 13.3333C13.0344 13.3333 13.3329 13.6318 13.3329 14Z"
+                                            stroke="#0992C9"
+                                            stroke-width="1.5"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                        />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_9500_971">
+                                            <rect width="16" height="16" fill="white" />
+                                        </clipPath>
+                                    </defs>
                                 </svg>
                             </button>
                         )}

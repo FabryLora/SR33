@@ -109,12 +109,12 @@ class ProductoController extends Controller
 
         // Cargar datos adicionales para la vista
         $categorias = Categoria::with('subCategorias')->orderBy('order', 'asc')->get();
-        $subcategorias = SubCategoria::orderBy('order', 'asc')->get();
         $categoria = $request->filled('id') ? Categoria::findOrFail($request->id) : null;
+        $marcas = Marca::orderBy('order', 'asc')->get();
+        $modelos = Modelo::orderBy('order', 'asc')->get();
 
         return view('productos', [
             'categorias' => $categorias,
-            'subcategorias' => $subcategorias,
             'productos' => $productos,
             'categoria' => $categoria,
             'id' => $request->id,
@@ -123,6 +123,8 @@ class ProductoController extends Controller
             'code_oem' => $request->code_oem,
             'desc_visible' => $request->desc_visible,
             'medida' => $request->medida,
+            'marcas' => $marcas,
+            'modelos' => $modelos,
         ]);
     }
 
@@ -135,7 +137,7 @@ class ProductoController extends Controller
         $categorias = Categoria::select('id', 'name', 'order')->orderBy('order', 'asc')->get();
 
         // Obtener productos relacionados por marca y modelo
-        $productosRelacionados = Producto::where('id', '!=', $producto->id)->orderBy('order', 'asc')->take(3)->get();
+        $productosRelacionados = Producto::where('id', '!=', $producto->id)->with(['categoria:id,name', 'imagenes', 'marca', 'modelo'])->orderBy('order', 'asc')->limit(3)->get();
 
         return view('producto', [
             'producto' => $producto,
@@ -155,7 +157,7 @@ class ProductoController extends Controller
         $qty = $request->input('qty', 1); // Valor por defecto para qty
         $carrito = Cart::content();
 
-        $query = Producto::with(['imagenes', 'marca', 'modelo', 'precio'])->orderBy('order', 'asc');
+        $query = Producto::with(['imagenes', 'marca', 'modelo', 'precio', 'categoria'])->orderBy('order', 'asc');
 
         // Filtrar por código del subproducto
 
@@ -228,8 +230,8 @@ class ProductoController extends Controller
         # si el usuario es vendedor
 
         $categorias = Categoria::orderBy('order', 'asc')->get();
-        $subcategorias = SubCategoria::orderBy('order', 'asc')->get();
-
+        $marcas = Marca::orderBy('order', 'asc')->get();
+        $modelos = Modelo::orderBy('order', 'asc')->get();
         $userId = Auth::id();
 
         $productosOferta = Producto::whereHas('ofertas', function ($query) use ($userId) {
@@ -252,13 +254,14 @@ class ProductoController extends Controller
         return inertia('privada/productosPrivada', [
             'productos' => $productos,
             'categorias' => $categorias,
-            'subcategorias' => $subcategorias,
             'productosOferta' => $productosOferta,
             'id' => $request->id ?? null,
             'modelo_id' => $request->modelo_id ?? null,
             'code' => $request->code ?? null,
             'code_oem' => $request->code_oem ?? null,
             'desc_visible' => $request->desc_visible ?? null,
+            'marcas' => $marcas,
+            'modelos' => $modelos,
 
         ]);
     }

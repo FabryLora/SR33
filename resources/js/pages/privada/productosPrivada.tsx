@@ -1,12 +1,12 @@
 import ProductosPrivadaRow from '@/components/productosPrivadaRow';
-import Slider from '@/components/slider';
+import SearchBar from '@/components/searchBar';
 import { Head, router, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import DefaultLayout from '../defaultLayout';
 
 export default function ProductosPrivada({ categorias, subcategorias }) {
-    const { productos, auth, clienteSeleccionado, id, modelo_id, code, code_oem, desc_visible } = usePage().props;
+    const { productos, auth, clienteSeleccionado } = usePage().props;
     const user = auth.user;
 
     const [margenSwitch, setMargenSwitch] = useState(false);
@@ -119,105 +119,7 @@ export default function ProductosPrivada({ categorias, subcategorias }) {
             )}
 
             <div className="mb-10 flex flex-col gap-10 max-sm:gap-6">
-                <Slider />
-                <div className="bg-primary-orange h-[123px] w-full max-sm:h-auto max-sm:py-4">
-                    <div className="mx-auto flex h-full w-[1200px] flex-row items-center max-sm:w-full max-sm:flex-col max-sm:gap-4 max-sm:px-4">
-                        <p className="w-1/3 text-[24px] text-white max-sm:w-full max-sm:text-center max-sm:text-[20px]">Compra rápida</p>
-                        <form
-                            onSubmit={handleFastBuy}
-                            className="grid h-[47px] w-full grid-cols-5 gap-5 max-sm:h-auto max-sm:grid-cols-1 max-sm:gap-3"
-                        >
-                            <input
-                                name="code"
-                                placeholder="Codigo"
-                                type="text"
-                                className="focus:outline-primary-orange col-span-2 bg-white pl-2 transition duration-300 outline-none placeholder:text-black max-sm:col-span-1 max-sm:h-[40px]"
-                            />
-                            <input
-                                name="qty"
-                                placeholder="Cantidad"
-                                type="number"
-                                className="focus:outline-primary-orange col-span-2 bg-white pl-2 transition duration-300 outline-none placeholder:text-black max-sm:col-span-1 max-sm:h-[40px]"
-                            />
-                            <button className="border text-white transition duration-300 hover:bg-white hover:text-black max-sm:h-[40px]">
-                                Añadir
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                <div className="w-full">
-                    <form
-                        action={route('index.privada.productos')}
-                        method="GET"
-                        className="mx-auto flex h-fit w-[1200px] flex-row items-center gap-4 max-sm:w-full max-sm:flex-col max-sm:gap-3 max-sm:px-4"
-                    >
-                        <select
-                            defaultValue={id || ''}
-                            name="id"
-                            onChange={(e) => setMarcaSelected(e.target.value)}
-                            className="focus:outline-primary-orange h-[47px] w-full border bg-white outline-0 transition duration-300 focus:outline max-sm:h-[40px]"
-                        >
-                            <option value="">Marca</option>
-                            {categorias?.map((categoria) => (
-                                <option key={categoria.id} value={categoria.id}>
-                                    {categoria.name}
-                                </option>
-                            ))}
-                        </select>
-
-                        <select
-                            defaultValue={modelo_id || ''}
-                            name="modelo_id"
-                            className="focus:outline-primary-orange h-[47px] w-full border bg-white outline-0 transition duration-300 focus:outline max-sm:h-[40px]"
-                        >
-                            <option value="">Modelo</option>
-                            {subcategorias
-                                ?.filter((subcategoria) => subcategoria.categoria_id == marcaSelected)
-                                .map((subcategoria) => (
-                                    <option key={subcategoria.id} value={subcategoria.id}>
-                                        {subcategoria.name}
-                                    </option>
-                                ))}
-                        </select>
-
-                        <input
-                            defaultValue={desc_visible || ''}
-                            type="text"
-                            name="medida"
-                            placeholder="Medida"
-                            className="focus:outline-primary-orange h-[47px] w-full border bg-white pl-2 outline-0 transition duration-300 placeholder:text-black focus:outline max-sm:h-[40px]"
-                        />
-
-                        <input
-                            defaultValue={code || ''}
-                            type="text"
-                            name="code"
-                            placeholder="Código"
-                            className="focus:outline-primary-orange h-[47px] w-full border bg-white pl-2 outline-0 transition duration-300 placeholder:text-black focus:outline max-sm:h-[40px]"
-                        />
-                        <input
-                            defaultValue={code_oem || ''}
-                            type="text"
-                            name="code_oem"
-                            placeholder="Cód. OEM"
-                            className="focus:outline-primary-orange h-[47px] w-full border bg-white pl-2 outline-0 transition duration-300 placeholder:text-black focus:outline max-sm:h-[40px]"
-                        />
-                        <input
-                            defaultValue={desc_visible || ''}
-                            type="text"
-                            name="descripcion"
-                            placeholder="Descripcion"
-                            className="focus:outline-primary-orange h-[47px] w-full border bg-white pl-2 outline-0 transition duration-300 placeholder:text-black focus:outline max-sm:h-[40px]"
-                        />
-
-                        <button
-                            type="submit"
-                            className="bg-primary-orange hover:text-primary-orange hover:border-primary-orange h-[47px] w-full border border-white text-white transition duration-300 hover:bg-white max-sm:h-[40px]"
-                        >
-                            Buscar
-                        </button>
-                    </form>
-                </div>
+                <SearchBar />
                 <div className="mx-auto flex w-[1200px] flex-col gap-2 max-sm:w-full max-sm:px-4">
                     <div className="flex flex-row justify-end max-sm:justify-end">
                         <div className="flex flex-row items-center gap-2">
@@ -233,16 +135,18 @@ export default function ProductosPrivada({ categorias, subcategorias }) {
                         </div>
                     </div>
                     <div className="w-full">
-                        <div className="grid h-[52px] grid-cols-9 items-center bg-[#F5F5F5] max-sm:hidden max-sm:h-[40px] max-sm:grid-cols-4 max-sm:text-[12px]">
+                        <div className="bg-primary-orange grid h-[52px] grid-cols-11 items-center rounded-t-sm text-white max-sm:hidden max-sm:h-[40px] max-sm:grid-cols-4 max-sm:text-[12px]">
                             <p className="max-sm:hidden"></p>
-                            <p>Código</p>
-                            <p className="max-sm:hidden">Codigo OEM</p>
-                            <p>Descripcion</p>
-                            <p className="text-right">Precio</p>
-                            <p className="text-right max-sm:hidden">Cantidad</p>
-                            <p className="text-right max-sm:hidden">Subtotal</p>
-                            <p className="text-center max-sm:hidden">Stock</p>
-                            <p className="max-sm:hidden"></p>
+                            <p className="max-sm:hidden">Cód. SR</p>
+                            <p>Cód. Original</p>
+                            <p>Marca</p>
+                            <p className="">Modelo</p>
+                            <p className="text-center max-sm:hidden">Tipo de producto</p>
+                            <p className="text-right max-sm:hidden">Precio</p>
+                            <p className="text-center max-sm:hidden">Descuentos</p>
+                            <p className="text-right max-sm:hidden">Precio con descuento</p>
+                            <p className="text-center max-sm:hidden">Cantidad</p>
+                            <p></p>
                         </div>
                         {productos?.data?.map((producto, index) => (
                             <ProductosPrivadaRow
