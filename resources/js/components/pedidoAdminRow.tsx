@@ -96,10 +96,7 @@ export default function PedidoAdminRow({ pedido }) {
                                                 <span className="text-gray-600">Tipo de Entrega:</span>
                                                 <span className="font-medium">{pedido.tipo_entrega}</span>
                                             </div>
-                                            <div className="flex justify-between">
-                                                <span className="text-gray-600">Tipo de Pago:</span>
-                                                <span className="font-medium">{pedido.forma_pago}</span>
-                                            </div>
+
                                             {pedido.mensaje && (
                                                 <div className="pt-2">
                                                     <span className="text-gray-600">Mensaje:</span>

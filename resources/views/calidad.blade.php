@@ -1,11 +1,14 @@
 @extends('layouts.default')
 
-@section('title', 'Calidad - Autopartes TB')
+@section('title', 'Calidad - SR33')
+
+@section('description', $metadatos->description ?? "")
+@section('keywords', $metadatos->keywords ?? "")
 
 @section('content')
-    <div class="mx-auto grid grid-cols-2 w-full max-w-[1200px]   px-4  gap-10  py-20">
+    <div class="mx-auto grid grid-cols-2 w-full max-w-[1200px] max-sm:grid-cols-1   px-4  gap-10  py-20">
 
-        <div class="h-full w-full py-4 lg:py-10">
+        <div class="h-full w-full py-4 lg:py-10 max-sm:order-2">
             <div class="flex flex-col gap-4 lg:gap-6">
                 <div class="flex flex-row justify-between items-center">
                     <h2 class="text-2xl font-bold sm:text-3xl">{{ $calidad->title ?? null }}</h2>
@@ -15,11 +18,12 @@
                 <div class="" {!! $calidad->text ?? null !!}></div>
             </div>
         </div>
-        <div class="h-auto w-full lg:h-[476px]">
+        <div class="h-auto w-full lg:h-[476px] max-sm:order-1">
             <img class="h-full w-full object-cover" src="{{ $calidad->image ?? null }}" alt="Imagen nosotros">
         </div>
         @foreach ($archivos as $archivo)
-            <div class="w-full border border-primary-orange flex flex-row justify-between items-center px-4 h-[59px]">
+            <div
+                class="w-full border border-primary-orange flex flex-row justify-between items-center px-4 h-[59px] max-sm:order-3">
                 <div class="flex flex-row gap-3 items-center">
                     <img src={{$archivo->image ?? null}} class="w-[27px] h-[27px]" alt="">
                     <p>{{$archivo->name ?? null}}</p>

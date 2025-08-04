@@ -1,6 +1,7 @@
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { router, useForm, usePage } from '@inertiajs/react';
+import { Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 /* import defaultPhoto from '../../images/defaultPhoto.png'; */
@@ -104,7 +105,7 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                         </p>
                         <p className="absolute w-full text-right text-gray-400 line-through">
                             ${' '}
-                            {Number(Number(producto?.precio?.precio))?.toLocaleString('es-AR', {
+                            {Number(Number(producto?.precio?.precio) * cantidad)?.toLocaleString('es-AR', {
                                 maximumFractionDigits: 2,
                                 minimumFractionDigits: 2,
                             })}
@@ -148,6 +149,9 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                                 Number(Number(producto?.precio?.precio)) *
                                 (1 + Number(margenes?.general ?? 0) / 100) *
                                 (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
+                                (1 - Number(user?.descuento_uno) / 100) *
+                                (1 - Number(user?.descuento_dos) / 100) *
+                                (1 - Number(user?.descuento_tres) / 100) *
                                 cantidad
                             )?.toLocaleString('es-AR', {
                                 maximumFractionDigits: 2,
@@ -197,23 +201,12 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
 
                 <p className="flex justify-center">
                     {ziggy.location.includes('carrito') ? (
-                        <button type="button" onClick={removeFromCart} className="">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="#0072c6"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="lucide lucide-trash-icon lucide-trash"
-                            >
-                                <path d="M3 6h18" />
-                                <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                                <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                            </svg>
+                        <button
+                            type="button"
+                            onClick={removeFromCart}
+                            className="border-primary-orange flex h-[36px] w-[36px] items-center justify-center rounded-sm border transition duration-300 hover:scale-95 hover:shadow-sm"
+                        >
+                            <Trash2 size={16} color="#0992c9" />
                         </button>
                     ) : (
                         <button
@@ -245,13 +238,13 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
             <div className="mb-3 rounded-lg border border-gray-200 bg-white p-4 shadow-sm sm:hidden">
                 {/* Header de la tarjeta */}
                 <div className="mb-3 flex items-start gap-3">
-                    <div className="h-[60px] w-[60px] flex-shrink-0">
+                    <div className="h-[60px] w-[60px] flex-shrink-0 rounded-sm border">
                         <img src={producto?.imagenes[0]?.image} className="h-full w-full object-contain" alt="" />
                     </div>
                     <div className="min-w-0 flex-1">
-                        <div className="mb-1 flex items-center justify-between">
-                            <p className="text-sm font-medium text-gray-900">{producto?.code}</p>
-                            {producto?.oferta == 1 && <span className="rounded bg-green-50 px-2 py-1 text-xs font-bold text-green-500">OFERTA</span>}
+                        <div className="mb-1 flex items-center gap-2">
+                            <p className="text-sm font-medium text-gray-900">Cod. Ori: {producto?.code}</p>
+                            <p className="text-primary-orange text-sm font-medium">Cod. SR: {producto?.code_sr}</p>
                         </div>
                         <p className="line-clamp-2 text-sm text-gray-600">{producto?.name}</p>
                         {producto?.code_oem && (
@@ -272,39 +265,35 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                 {/* Precio */}
                 <div className="mb-3">
                     {margenSwitch ? (
-                        <div className="text-right">
-                            <p className="text-lg font-semibold text-gray-900">
+                        <div className="relative">
+                            <p className="text-right">
                                 ${' '}
                                 {(
-                                    Number(
-                                        producto?.oferta == 1
-                                            ? Number(producto?.precio?.precio) * (1 - Number(producto?.descuento_oferta) / 100)
-                                            : Number(producto?.precio?.precio),
-                                    ) *
-                                    (1 - Number(margen) / 100)
+                                    Number(Number(producto?.precio?.precio)) *
+                                    (1 + Number(margenes?.general ?? 0) / 100) *
+                                    (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
+                                    cantidad
                                 )?.toLocaleString('es-AR', {
                                     maximumFractionDigits: 2,
                                     minimumFractionDigits: 2,
                                 })}
                             </p>
-                            <p className="text-sm text-gray-400 line-through">
+                            <p className="absolute top-0 -left-20 w-full text-right text-gray-400 line-through">
                                 ${' '}
-                                {Number(
-                                    producto?.oferta == 1
-                                        ? Number(producto?.precio?.precio) * (1 - Number(producto?.descuento_oferta) / 100)
-                                        : Number(producto?.precio?.precio),
-                                )?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                                {Number(Number(producto?.precio?.precio) * cantidad)?.toLocaleString('es-AR', {
+                                    maximumFractionDigits: 2,
+                                    minimumFractionDigits: 2,
+                                })}
                             </p>
                         </div>
                     ) : (
-                        <div className="text-right">
-                            <p className="text-lg font-semibold text-gray-900">
+                        <div className="relative">
+                            <p className="text-right">
                                 ${' '}
-                                {Number(
-                                    producto?.oferta == 1
-                                        ? Number(producto?.precio?.precio) * (1 - Number(producto?.descuento_oferta) / 100)
-                                        : producto?.precio?.precio,
-                                )?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                                {Number(producto?.precio?.precio * cantidad)?.toLocaleString('es-AR', {
+                                    maximumFractionDigits: 2,
+                                    minimumFractionDigits: 2,
+                                })}
                             </p>
                         </div>
                     )}
@@ -336,48 +325,63 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                         </div>
 
                         {/* Indicador de stock */}
-                        <div className="flex items-center gap-1">
-                            <div className="h-[8px] w-[8px] rounded-full bg-gray-200"></div>
-                            <span className="text-xs text-gray-500">Stock</span>
-                        </div>
                     </div>
 
                     {/* Botón de acción */}
                     <div className="flex items-center gap-2">
                         {/* Subtotal */}
                         {margenSwitch ? (
-                            <div className="text-right">
-                                <p className="text-sm font-medium text-gray-900">
+                            <div className="relative">
+                                <p className="text-right">
                                     ${' '}
                                     {(
-                                        Number(
-                                            producto?.oferta == 1
-                                                ? Number(producto?.precio?.precio) * cantidad * (1 - Number(producto?.descuento_oferta) / 100)
-                                                : Number(producto?.precio?.precio) * cantidad,
-                                        ) *
-                                        (1 - Number(margen) / 100)
+                                        Number(producto?.precio?.precio) *
+                                        cantidad *
+                                        (1 + Number(margenes?.general ?? 0) / 100) *
+                                        (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
+                                        (1 - Number(user?.descuento_uno) / 100) *
+                                        (1 - Number(user?.descuento_dos) / 100) *
+                                        (1 - Number(user?.descuento_tres) / 100)
+                                    ).toLocaleString('es-AR', {
+                                        maximumFractionDigits: 2,
+                                        minimumFractionDigits: 2,
+                                    })}
+                                </p>
+                                <p className="absolute top-0 -left-20 w-full text-right text-gray-400 line-through">
+                                    ${' '}
+                                    {(
+                                        Number(Number(producto?.precio?.precio)) *
+                                        (1 + Number(margenes?.general ?? 0) / 100) *
+                                        (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
+                                        (1 - Number(user?.descuento_uno) / 100) *
+                                        (1 - Number(user?.descuento_dos) / 100) *
+                                        (1 - Number(user?.descuento_tres) / 100) *
+                                        cantidad
                                     )?.toLocaleString('es-AR', {
                                         maximumFractionDigits: 2,
                                         minimumFractionDigits: 2,
                                     })}
                                 </p>
-                                <p className="text-xs text-gray-400 line-through">
-                                    ${' '}
-                                    {Number(
-                                        producto?.oferta == 1
-                                            ? Number(producto?.precio?.precio) * cantidad * (1 - Number(producto?.descuento_oferta) / 100)
-                                            : producto?.precio?.precio * cantidad,
-                                    )?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
-                                </p>
                             </div>
                         ) : (
-                            <p className="text-sm font-medium text-gray-900">
+                            <p className="relative text-right">
+                                <p
+                                    className={`absolute -top-3 text-xs font-bold text-green-500 uppercase ${user?.descuento_uno == 0 ? 'hidden' : ''}`}
+                                >
+                                    Descuento
+                                </p>
                                 ${' '}
-                                {Number(
-                                    producto?.oferta == 1
-                                        ? Number(producto?.precio?.precio) * cantidad * (1 - Number(producto?.descuento_oferta) / 100)
-                                        : producto?.precio?.precio * cantidad,
-                                )?.toLocaleString('es-AR', { maximumFractionDigits: 2, minimumFractionDigits: 2 })}
+                                {user?.descuento_uno &&
+                                    (
+                                        Number(producto?.precio?.precio) *
+                                        cantidad *
+                                        (1 - Number(user?.descuento_uno) / 100) *
+                                        (1 - Number(user?.descuento_dos) / 100) *
+                                        (1 - Number(user?.descuento_tres) / 100)
+                                    ).toLocaleString('es-AR', {
+                                        maximumFractionDigits: 2,
+                                        minimumFractionDigits: 2,
+                                    })}
                             </p>
                         )}
 

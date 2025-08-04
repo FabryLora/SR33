@@ -66,10 +66,7 @@
                         <span style="color: #6b7280;">Tipo de Entrega:</span>
                         <span style="font-weight: 500;">{{ $pedido->tipo_entrega }}</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-                        <span style="color: #6b7280;">Tipo de Pago:</span>
-                        <span style="font-weight: 500;">{{ $pedido->forma_pago }}</span>
-                    </div>
+
                     @if($pedido->mensaje)
                         <div style="padding-top: 8px;">
                             <span style="color: #6b7280;">Mensaje:</span>

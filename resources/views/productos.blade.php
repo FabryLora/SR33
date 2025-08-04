@@ -1,19 +1,16 @@
 @extends('layouts.default')
-@section('title', 'Autopartes TB')
+@section('title', 'Productos - SR33')
+
+@section('description', $metadatos->description ?? "")
+@section('keywords', $metadatos->keywords ?? "")
 
 @section('content')
     <div class="flex flex-col gap-10 max-sm:gap-6">
 
-        <!-- Breadcrumb navigation -->
-        <div class="hidden lg:block w-[1200px] max-sm:w-full max-sm:px-4 mx-auto h-full mt-10 max-sm:mt-6">
-            <div class="text-black">
-                <a href="{{ route('home') }}" class="hover:underline transition-all duration-300 font-bold">Inicio</a>
-                <span class="mx-[2px]">/</span>
-                <a href="{{ route('productos') }}" class="hover:underline transition-all duration-300 ">Productos</a>
-            </div>
-        </div>
 
-        <x-search-bar :categorias="$categorias" :marcas="$marcas" :modelos="$modelos" />
+
+        <x-search-bar :categorias="$categorias" :marcas="$marcas" :modelos="$modelos" :tipo="$tipo" :code="$code"
+            :codesr="$code_sr" :marca="$marca" :modelo="$modelo" />
 
         <!-- Main content with sidebar and products -->
         <div class="flex flex-col lg:flex-row gap-6 max-sm:gap-4 w-[1200px] max-sm:w-full max-sm:px-4 mx-auto">
@@ -26,7 +23,7 @@
                     @forelse($productos as $producto)
                         <a href="{{ "/p/" . $producto->code }}"
                             class=" transition transform hover:-translate-y-1 hover:shadow-lg duration-300
-                                                                                                                                                                            h-[420px] max-sm:h-auto flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
+                                                                                                                                                                                                                                    h-[420px] max-sm:h-auto flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
                             <div class="h-full flex flex-col">
                                 @if ($producto->imagenes->count() > 0)
                                     <div class="relative min-h-[287px] max-sm:h-[200px]">

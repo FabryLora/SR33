@@ -74,13 +74,13 @@ export default function Margenes() {
             <div className="mx-auto my-20 min-h-[50vh] w-[1200px] max-sm:w-full max-sm:px-4">
                 {/* Mensaje de éxito */}
 
-                <div className="flex flex-row gap-20">
+                <div className="flex flex-row gap-20 max-sm:flex-col">
                     {/* Margen General */}
                     <div className="flex flex-col gap-4">
                         <label className="font-bold" htmlFor="margen-general">
                             Catálogo en general
                         </label>
-                        <div className="flex h-[48px] w-[392px] items-center justify-between border">
+                        <div className="flex h-[48px] max-w-[392px] items-center justify-between rounded-sm border">
                             <input
                                 defaultValue={margenGeneral}
                                 onChange={changeMargenGeneral}
@@ -88,7 +88,7 @@ export default function Margenes() {
                                 id="margen-general"
                                 min="0"
                                 max="100"
-                                step="0.01"
+                                step="1"
                                 className="h-full w-[80%] pl-2 outline-none"
                             />
                             <span className="flex h-full w-[20%] items-center justify-center text-gray-300">%</span>
@@ -109,7 +109,7 @@ export default function Margenes() {
                                 <label htmlFor={`margen-${tipo?.id}`} className="font-bold">
                                     {tipo?.name}
                                 </label>
-                                <div className="flex h-[48px] w-[392px] items-center justify-between border">
+                                <div className="flex h-[48px] max-w-[392px] items-center justify-between rounded-sm border">
                                     <input
                                         defaultValue={margenesTipos[tipo?.name] || 0}
                                         onChange={(e) => changeMargenTipo(tipo?.name, e)}
@@ -117,7 +117,7 @@ export default function Margenes() {
                                         id={`margen-${tipo?.id}`}
                                         min="0"
                                         max="100"
-                                        step="0.01"
+                                        step="1"
                                         className="h-full w-[80%] pl-2 outline-none"
                                     />
                                     <span className="flex h-full w-[20%] items-center justify-center text-gray-300">%</span>

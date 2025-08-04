@@ -16,8 +16,7 @@
                 </div>
                 <div class="absolute inset-0 bg-black/50 z-10"></div>
                 <div class="absolute inset-0 flex z-20 lg:max-w-[1200px] lg:mx-auto max-sm:px-4">
-                    <div
-                        class="relative flex flex-col gap-4 sm:gap-6 lg:gap-19 max-sm:gap-3 w-full justify-center  max-sm:pb-16">
+                    <div class="relative flex flex-col gap-4 sm:gap-6 lg:gap-19 max-sm:gap-3 w-full justify-center  ">
                         <div
                             class="max-w-[320px] sm:max-w-[400px] lg:max-w-[480px] max-sm:max-w-full text-white flex flex-col gap-10 max-sm:gap-3">
                             <div class="flex flex-col">

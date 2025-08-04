@@ -1,14 +1,17 @@
 @extends('layouts.default')
 
-@section('title', 'Novedades - Autopartes TB')
+@section('title', 'Novedades - SR33')
+
+@section('description', $metadatos->description ?? "")
+@section('keywords', $metadatos->keywords ?? "")
 
 @section('content')
 
-    <div class="w-[1200px] mx-auto my-20">
-        <div class="grid grid-cols-3 gap-6">
+    <div class="max-w-[1200px] mx-auto my-20 max-sm:my-10">
+        <div class="grid grid-cols-3 gap-6 max-sm:grid-cols-1 max-sm:px-4">
             @foreach($novedades as $novedad)
                 <a href="{{ url('/novedades/' . $novedad->id) }}"
-                    class="flex flex-col gap-2 max-w-[392px] h-[560px] border rounded-sm">
+                    class="flex flex-col gap-2 max-w-[392px] h-[560px] border rounded-sm transition transform hover:-translate-y-1 hover:shadow-lg duration-300">
                     <div class="max-w-[391px] min-h-[321px] rounded-t-sm">
                         <img src="{{ $novedad->image }}" alt="{{ $novedad->title }}"
                             class="h-full w-full object-cover rounded-t-sm">

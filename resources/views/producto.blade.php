@@ -1,6 +1,9 @@
 @extends('layouts.default')
 @section('title', 'SR33 - ' . $producto->code)
 
+@section('description', $producto->name ?? "")
+
+
 @section('content')
     <div class="flex flex-col gap-10 max-sm:gap-6">
         <!-- Breadcrumb navigation -->
@@ -25,11 +28,12 @@
             <div class="w-full max-sm:w-full">
                 <div class="flex flex-col md:flex-row gap-5 max-sm:gap-4">
                     <!-- Image Gallery -->
-                    <div class="w-full flex flex-row gap-5  ">
-                        <div class="  gap-2 flex flex-col  max-sm:static max-sm:mt-4 max-sm:justify-start max-sm:gap-1.5">
+                    <div class="w-full flex flex-row gap-5 max-sm:flex-col max-sm:mt-10">
+                        <div
+                            class="  gap-2 flex flex-col  max-sm:static max-sm:mt-4 max-sm:justify-start max-sm:gap-1.5 max-sm:order-2">
                             @foreach ($producto->imagenes as $imagen)
                                 <div class="border border-gray-200 w-[78px] h-[78px] cursor-pointer hover:border-main-color rounded-sm max-sm:w-[60px] max-sm:h-[60px]
-                                                                                                                                                                                                                                                                                                            {{ $loop->first ? 'border-main-color' : '' }}"
+                                                                                                                                                                                                                                                                                                                                                                    {{ $loop->first ? 'border-main-color' : '' }}"
                                     onclick="changeMainImage('{{ $imagen->image }}', this)">
                                     <img src="{{ $imagen->image }}" alt="Thumbnail"
                                         class="w-full h-full object-cover rounded-sm">
@@ -64,10 +68,8 @@
                                 class="text-[28px] font-semibold leading-[1] max-sm:text-xl max-sm:leading-tight border-b  pb-4">
                                 {{ $producto->name }}
                             </h1>
-                            <div class="prose max-w-none py-2 custom-summernote max-sm:py-1 max-sm:text-sm">
-                                {!! $producto->desc_visible !!}
-                            </div>
-                            <div class="flex flex-col w-full gap-4">
+
+                            <div class="flex flex-col w-full gap-4 max-sm:py-8">
                                 <h3>{{"Cod. Ori: " . $producto->code . " / "}} <span
                                         class="text-primary-orange">{{"Cod. SR: " . $producto->code_sr}}</span></h3>
 
@@ -96,7 +98,7 @@
                         @forelse($productosRelacionados as $prodRelacionado)
                             <a href="{{ "/p/" . $prodRelacionado->code }}"
                                 class=" transition transform hover:-translate-y-1 hover:shadow-lg duration-300
-                                                                                                                                                                                                            h-[420px] max-sm:h-auto flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
+                                                                                                                                                                                                                                                                    h-[420px] max-sm:h-auto flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
                                 <div class="h-full flex flex-col">
                                     @if ($prodRelacionado->imagenes->count() > 0)
                                         <div class="relative min-h-[287px] max-sm:h-[200px]">

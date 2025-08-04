@@ -1,7 +1,7 @@
 {{-- resources/views/components/footer.blade.php --}}
 <div class="flex h-fit w-full flex-col bg-black">
     <div
-        class="mx-auto flex h-full w-full max-w-[1200px] flex-col items-center justify-between gap-20 px-4 py-10 lg:flex-row lg:items-start  lg:px-0 lg:py-26">
+        class="mx-auto flex h-full w-full max-w-[1200px] flex-col items-center justify-between gap-20 max-sm:gap-10 px-4 py-10 lg:flex-row lg:items-start  lg:px-0 lg:py-26">
         {{-- Logo y redes sociales --}}
         <div class="flex h-full flex-col items-center gap-4">
             <a href="/">
@@ -48,11 +48,10 @@
         <div class="flex flex-col items-center gap-6 sm:hidden">
             <h2 class="text-lg font-bold text-white">Secciones</h2>
             <div class="flex flex-wrap justify-center gap-x-6 gap-y-4">
-                {{-- <a href="{{ route('nosotros') }}" class="text-[15px] text-white/80">Nosotros</a>
+                <a href="{{ route('nosotros') }}" class="text-[15px] text-white/80">Nosotros</a>
                 <a href="{{ route('productos') }}" class="text-[15px] text-white/80">Productos</a>
-                <a href="{{ route('calidad') }}" class="text-[15px] text-white/80">Calidad</a>
-                <a href="{{ route('novedades') }}" class="text-[15px] text-white/80">Novedades</a>
-                <a href="{{ route('contacto') }}" class="text-[15px] text-white/80">Contacto</a> --}}
+                <a href="{{ route('calidad') }}" class="text-[15px] text-white/80">Novedades</a>
+                <a href="{{ route('contacto') }}" class="text-[15px] text-white/80">Contacto</a>
             </div>
         </div>
 

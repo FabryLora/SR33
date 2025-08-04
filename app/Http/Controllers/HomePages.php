@@ -28,7 +28,7 @@ class HomePages extends Controller
             return redirect('/privada/productos');
         }
 
-        $metadatos = Metadatos::where('title', 'home')->first();
+        $metadatos = Metadatos::where('title', 'Inicio')->first();
 
         $categorias = Categoria::orderBy('order', 'asc')->get();
         $subcategorias = SubCategoria::orderBy('order', 'asc')->get();
@@ -57,40 +57,48 @@ class HomePages extends Controller
 
     public function nosotros()
     {
+        $metadatos = Metadatos::where('title', 'Nosotros')->first();
         $nosotros = Nosotros::first();
         $valores = Valores::first();
         return view('empresa', [
             'nosotros' => $nosotros,
             'valores' => $valores,
+            'metadatos' => $metadatos,
         ]);
     }
 
     public function calidad()
     {
+        $metadatos = Metadatos::where('title', 'Calidad')->first();
         $calidad = Calidad::first();
         $archivos = ArchivoCalidad::orderBy('order', 'asc')->get();
 
         return view('calidad', [
             'calidad' => $calidad,
             'archivos' => $archivos,
+            'metadatos' => $metadatos,
         ]);
     }
 
     public function novedades()
     {
+        $metadatos = Metadatos::where('title', 'Novedades')->first();
         $novedades = Novedades::orderBy('order', 'asc')
             ->get();
         return view('lanzamientos', [
             'novedades' => $novedades,
+            'metadatos' => $metadatos,
         ]);
     }
 
     public function contacto(Request $request)
     {
+        $metadatos = Metadatos::where('title', 'Contacto')->first();
         $contacto = Contacto::first();
         return view('contacto', [
             'contacto' => $contacto,
             'mensaje' => $request->mensaje ?? null,
+            'metadatos' => $metadatos,
         ]);
     }
 }

@@ -114,21 +114,6 @@ const Footer = () => {
                     </div>
                 </div>
 
-                {/* Secciones - Mobile */}
-                <div className="flex flex-col items-center gap-6 sm:hidden">
-                    <h2 className="text-lg font-bold text-white">Secciones</h2>
-                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-4">
-                        {/* Commented out in original, uncomment if needed */}
-                        {/* 
-                        <Link href="/nosotros" className="text-[15px] text-white/80">Nosotros</Link>
-                        <Link href="/productos" className="text-[15px] text-white/80">Productos</Link>
-                        <Link href="/calidad" className="text-[15px] text-white/80">Calidad</Link>
-                        <Link href="/novedades" className="text-[15px] text-white/80">Novedades</Link>
-                        <Link href="/contacto" className="text-[15px] text-white/80">Contacto</Link>
-                        */}
-                    </div>
-                </div>
-
                 {/* Newsletter */}
                 <div className="flex h-full flex-col items-center gap-6 lg:items-start lg:gap-10">
                     <h2 className="text-lg font-bold text-white uppercase">Suscribite al Newsletter</h2>

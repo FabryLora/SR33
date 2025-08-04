@@ -61,17 +61,17 @@ class ProductoController extends Controller
         $query = Producto::query();
 
         // Filtro por categoría (a través de marcas)
-        if ($request->filled('id')) {
-            $query->whereHas('marca', function ($q) use ($request) {
-                $q->where('categoria_id', $request->id);
-            });
+        if ($request->filled('tipo')) {
+            $query->where('categoria_id', $request->tipo);
         }
 
         // Filtro por modelo/subcategoría
-        if ($request->filled('modelo_id')) {
-            $query->whereHas('modelos', function ($q) use ($request) {
-                $q->where('sub_categoria_id', $request->modelo_id);
-            });
+        if ($request->filled('marca')) {
+            $query->where('marca_id', $request->marca);
+        }
+
+        if ($request->filled('modelo')) {
+            $query->where('modelo_id', $request->modelo);
         }
 
         // Filtro por código
@@ -80,25 +80,16 @@ class ProductoController extends Controller
         }
 
         // Filtro por código OEM
-        if ($request->filled('code_oem')) {
-            $query->where('code_oem', 'LIKE', '%' . $request->code_oem . '%');
+        if ($request->filled('code_sr')) {
+            $query->where('code_sr', 'LIKE', '%' . $request->code_sr . '%');
         }
 
-        if ($request->filled('medida')) {
-            $query->where('medida', 'LIKE', '%' . $request->medida . '%');
-        }
-
-        // Filtro por descripción visible
-        if ($request->filled('desc_visible')) {
-            $query->where('desc_visible', 'LIKE', '%' . $request->desc_visible . '%')
-                ->orWhere('desc_invisible', 'LIKE', '%' . $request->desc_visible . '%');
-        }
 
         // Aplicar ordenamiento por defecto
         $query->orderBy('order', 'asc');
 
         // Ejecutar query con paginación
-        $productos = $query->with(['marca', 'modelo'])
+        $productos = $query->with(['marca', 'modelo', 'imagenes', 'categoria'])
             ->paginate(15)
             ->appends($request->query());
 
@@ -109,20 +100,17 @@ class ProductoController extends Controller
 
         // Cargar datos adicionales para la vista
         $categorias = Categoria::with('subCategorias')->orderBy('order', 'asc')->get();
-        $categoria = $request->filled('id') ? Categoria::findOrFail($request->id) : null;
         $marcas = Marca::orderBy('order', 'asc')->get();
         $modelos = Modelo::orderBy('order', 'asc')->get();
 
         return view('productos', [
             'categorias' => $categorias,
             'productos' => $productos,
-            'categoria' => $categoria,
-            'id' => $request->id,
-            'modelo_id' => $request->modelo_id,
+            'tipo' => $request->tipo,
+            'marca' => $request->marca,
+            'modelo' => $request->modelo,
             'code' => $request->code,
-            'code_oem' => $request->code_oem,
-            'desc_visible' => $request->desc_visible,
-            'medida' => $request->medida,
+            'code_sr' => $request->code_sr,
             'marcas' => $marcas,
             'modelos' => $modelos,
         ]);
@@ -159,19 +147,17 @@ class ProductoController extends Controller
 
         $query = Producto::with(['imagenes', 'marca', 'modelo', 'precio', 'categoria'])->orderBy('order', 'asc');
 
-        // Filtrar por código del subproducto
-
-        if ($request->filled('id')) {
-            $query->whereHas('marca', function ($q) use ($request) {
-                $q->where('categoria_id', $request->id);
-            });
+        if ($request->filled('tipo')) {
+            $query->where('categoria_id', $request->tipo);
         }
 
         // Filtro por modelo/subcategoría
-        if ($request->filled('modelo_id')) {
-            $query->whereHas('modelo', function ($q) use ($request) {
-                $q->where('sub_categoria_id', $request->modelo_id);
-            });
+        if ($request->filled('marca')) {
+            $query->where('marca_id', $request->marca);
+        }
+
+        if ($request->filled('modelo')) {
+            $query->where('modelo_id', $request->modelo);
         }
 
         // Filtro por código
@@ -180,17 +166,8 @@ class ProductoController extends Controller
         }
 
         // Filtro por código OEM
-        if ($request->filled('code_oem')) {
-            $query->where('code_oem', 'LIKE', '%' . $request->code_oem . '%');
-        }
-
-        if ($request->filled('medida')) {
-            $query->where('medida', 'LIKE', '%' . $request->medida . '%');
-        }
-
-        // Filtro por descripción visible
-        if ($request->filled('desc_visible')) {
-            $query->where('desc_visible', 'LIKE', '%' . $request->desc . '%')->orWhere('desc_invisible', 'LIKE', '%' . $request->desc . '%');
+        if ($request->filled('code_sr')) {
+            $query->where('code_sr', 'LIKE', '%' . $request->code_sr . '%');
         }
 
 
@@ -255,11 +232,11 @@ class ProductoController extends Controller
             'productos' => $productos,
             'categorias' => $categorias,
             'productosOferta' => $productosOferta,
-            'id' => $request->id ?? null,
-            'modelo_id' => $request->modelo_id ?? null,
-            'code' => $request->code ?? null,
-            'code_oem' => $request->code_oem ?? null,
-            'desc_visible' => $request->desc_visible ?? null,
+            'tipo' => $request->tipo,
+            'marca' => $request->marca,
+            'modelo' => $request->modelo,
+            'code' => $request->code,
+            'code_sr' => $request->code_sr,
             'marcas' => $marcas,
             'modelos' => $modelos,
 

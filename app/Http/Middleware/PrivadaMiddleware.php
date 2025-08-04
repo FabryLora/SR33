@@ -23,6 +23,7 @@ class PrivadaMiddleware
             'logos' => fn() => Logos::first(),
             'provincias' => fn() => Provincia::with('localidades')->orderBy('name', 'asc')->get(),
             'carrito' => fn() => Cart::content(),
+            'carritoCount' => fn() => Cart::count(),
         ]);
 
         return $next($request);

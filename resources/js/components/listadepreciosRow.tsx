@@ -31,7 +31,7 @@ export default function ListaDePreciosRow({ lista }) {
                 </div>
                 <div className="flex items-center max-sm:justify-center max-sm:text-sm">
                     <span className="hidden max-sm:mr-2 max-sm:inline max-sm:font-medium">Peso:</span>
-                    {lista?.peso_archivo}
+                    {lista?.peso}
                 </div>
                 <div className="flex items-center max-sm:mt-2 max-sm:justify-center">
                     <a href={lista?.archivo} target="_blank" rel="noopener noreferrer" className="block w-full max-sm:w-auto">

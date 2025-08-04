@@ -183,23 +183,48 @@ export default function Carrito({
                             </div>
                         </div>
 
-                        {/* Opción: A convenir */}
                         <div
-                            className={`flex cursor-pointer items-center rounded-lg pl-3`}
+                            className={`flex cursor-pointer items-center justify-between rounded-lg pl-3`}
                             onClick={() => {
-                                setSelectedEnvio('Envio');
-                                setTipo_entrega_envio('Envio');
+                                setSelectedEnvio('Reparto SR33');
+                                setTipo_entrega_envio('Reparto SR33');
                             }}
                         >
                             <div className="flex items-center gap-3">
                                 <div
                                     className={`h-5 w-5 rounded-full border-2 ${
-                                        selectedEnvio === 'Envio' ? 'border-primary-orange flex items-center justify-center' : 'border-gray-400'
+                                        selectedEnvio === 'Reparto SR33'
+                                            ? 'border-primary-orange flex items-center justify-center'
+                                            : 'border-gray-400'
                                     }`}
                                 >
-                                    {selectedEnvio === 'Envio' && <div className="bg-primary-orange h-[10px] w-[10px] rounded-full"></div>}
+                                    {selectedEnvio === 'Reparto SR33' && <div className="bg-primary-orange h-[10px] w-[10px] rounded-full"></div>}
                                 </div>
-                                <label className="cursor-pointer">Envío</label>
+                                <label className="cursor-pointer">Reparto SR33</label>
+                            </div>
+                        </div>
+
+                        {/* Opción: A convenir */}
+                        <div
+                            className={`flex cursor-pointer items-center rounded-lg pl-3`}
+                            onClick={() => {
+                                setSelectedEnvio('Transporte al interior');
+                                setTipo_entrega_envio('Transporte al interior');
+                            }}
+                        >
+                            <div className="flex items-center gap-3">
+                                <div
+                                    className={`h-5 w-5 rounded-full border-2 ${
+                                        selectedEnvio === 'Transporte al interior'
+                                            ? 'border-primary-orange flex items-center justify-center'
+                                            : 'border-gray-400'
+                                    }`}
+                                >
+                                    {selectedEnvio === 'Transporte al interior' && (
+                                        <div className="bg-primary-orange h-[10px] w-[10px] rounded-full"></div>
+                                    )}
+                                </div>
+                                <label className="cursor-pointer">Transporte al interior</label>
                             </div>
                         </div>
                     </div>

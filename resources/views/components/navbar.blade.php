@@ -59,30 +59,50 @@
 
     <!-- Franja superior -->
 
-
     <!-- Contenido principal navbar -->
-    <div class="mx-auto flex h-full max-sm:h-[60px] w-[1200px] max-sm:w-full max-sm:px-4 items-center justify-between">
-        <a href="/">
-            <img :src="logoPrincipal" class="max-w-[124px] max-h-[84px] transition-all duration-300" alt="Logo" />
-        </a>
+    <div
+        class="mx-auto flex h-full max-sm:h-[60px] w-[1200px] max-xl:w-full max-xl:px-6 max-lg:px-4 max-sm:px-4 items-center justify-between">
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+            <a href="/">
+                <img :src="logoPrincipal"
+                    class="max-w-[124px] max-h-[84px] max-md:max-w-[100px] max-md:max-h-[68px] max-sm:max-w-[80px] max-sm:max-h-[54px] transition-all duration-300"
+                    alt="Logo" />
+            </a>
+        </div>
 
         <!-- Navegación desktop -->
-        <div class="hidden md:flex gap-8 items-center">
+        <div class="hidden lg:flex gap-8 max-xl:gap-6 items-center">
             @foreach(($isPrivate ? $privateLinks : $defaultLinks) as $link)
                 <a href="{{ $link['href'] }}" :class="scrolled ? 'text-black' : 'text-white'"
-                    class="text-[16px] font-normal hover:text-primary-orange transition-colors duration-300 
-                                                                                                                                                                                                                {{ Request::is(ltrim($link['href'], '/')) ? 'font-bold' : '' }}">
+                    class="text-[16px] max-xl:text-[15px] font-normal hover:text-primary-orange transition-colors duration-300 whitespace-nowrap
+                                                                                                                                                                                                                    {{ Request::is(ltrim($link['href'], '/')) ? 'font-bold' : '' }}">
                     {{ $link['title'] }}
                 </a>
             @endforeach
         </div>
 
-        <button @click="openModal('login')"
-            :class="scrolled ? 'border border-primary-orange text-primary-orange hover:bg-primary-orange hover:text-white' : 'text-primary-orange bg-white hover:border hover:border-primary-orange hover:bg-primary-orange hover:text-white'"
-            class="text-sm max-sm:text-xs  h-[36px] rounded-lg max-sm:h-[28px] w-[117px] max-sm:w-[120px]  max-sm:px-2">
-            <span class="max-sm:hidden">Área clientes</span>
-            <span class="hidden max-sm:inline">Privada</span>
-        </button>
+        <!-- Botones de acción -->
+        <div class="flex items-center gap-3 max-sm:gap-2">
+            <!-- Botón Área clientes - Desktop y mobile -->
+            <button @click="openModal('login')"
+                :class="scrolled ? 'border border-primary-orange text-primary-orange hover:bg-primary-orange hover:text-white' : 'text-primary-orange bg-white hover:border hover:border-primary-orange hover:bg-primary-orange hover:text-white'"
+                class="text-sm max-sm:text-xs h-[36px] rounded-lg max-sm:h-[28px] w-[117px] max-sm:w-[80px] max-sm:px-2 transition-all duration-300 flex-shrink-0">
+                <span class="max-sm:hidden">Área clientes</span>
+                <span class="hidden max-sm:inline">Privada</span>
+            </button>
+
+            <!-- Botón hamburguesa para móvil -->
+            <button @click="toggleMobileMenu()" :class="scrolled ? 'text-black' : 'text-white'"
+                class="lg:hidden p-2 transition-colors duration-300">
+                <svg class="w-6 h-6 max-sm:w-5 max-sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path x-show="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16"></path>
+                    <path x-show="mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
     </div>
 
     <!-- Menú móvil -->
@@ -92,12 +112,13 @@
         x-transition:leave="transition ease-in duration-150"
         x-transition:leave-start="opacity-100 transform translate-y-0"
         x-transition:leave-end="opacity-0 transform -translate-y-2"
-        class="hidden max-sm:block max-sm:absolute max-sm:w-full max-sm:top-24 bg-white border-t border-gray-200 shadow-lg">
-        <div class="py-2">
+        class="lg:hidden absolute w-full bg-white border-t border-gray-200 shadow-lg z-40"
+        @click.away="mobileMenuOpen = false">
+        <div class="py-2 max-h-[calc(100vh-60px)] overflow-y-auto">
             @foreach(($isPrivate ? $privateLinks : $defaultLinks) as $link)
                 <a href="{{ $link['href'] }}"
-                    class="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-primary-orange transition-colors duration-300
-                                                                                                                                                                                                                {{ Request::is(ltrim($link['href'], '/')) ? 'font-bold bg-orange-50 text-primary-orange' : '' }}"
+                    class="block px-4 py-3 max-sm:px-3 max-sm:py-2 text-sm max-sm:text-xs text-gray-700 hover:bg-gray-50 hover:text-primary-orange transition-colors duration-300 border-b border-gray-100 last:border-b-0
+                                                                                                                                                                                                                    {{ Request::is(ltrim($link['href'], '/')) ? 'font-bold bg-orange-50 text-primary-orange' : '' }}"
                     @click="mobileMenuOpen = false">
                     {{ $link['title'] }}
                 </a>
@@ -111,13 +132,13 @@
 
     <!-- Modal de Login -->
     <div x-show="showModal && modalType === 'login'" x-transition.opacity x-cloak
-        class="fixed inset-0 flex items-center justify-center z-50 max-sm:px-4">
+        class="fixed inset-0 flex items-center justify-center z-50 p-4">
         <form id="loginForm" method="POST" action="{{ route('login') }}" @click.away="closeModal()"
-            class="relative bg-white rounded-lg shadow-lg w-[400px] max-sm:w-full max-w-[90vw] p-6 max-sm:p-4">
+            class="relative bg-white rounded-lg shadow-lg w-full max-w-[400px] max-sm:max-w-[320px] p-6 max-sm:p-4">
 
             <!-- Botón cerrar -->
             <button type="button" @click="closeModal()"
-                class="absolute top-4 right-4 max-sm:top-3 max-sm:right-3 text-gray-500 hover:text-gray-700">
+                class="absolute top-4 right-4 max-sm:top-3 max-sm:right-3 text-gray-500 hover:text-gray-700 z-10">
                 <svg class="w-6 h-6 max-sm:w-5 max-sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                     </path>
@@ -125,7 +146,7 @@
             </button>
 
             @csrf
-            <h2 class="text-2xl max-sm:text-xl font-semibold mb-6 max-sm:mb-4 text-center">Iniciar Sesión</h2>
+            <h2 class="text-2xl max-sm:text-xl font-semibold mb-6 max-sm:mb-4 text-center pr-8">Iniciar Sesión</h2>
 
             <div class="space-y-4 max-sm:space-y-3">
                 <div>
@@ -164,13 +185,13 @@
 
     <!-- Modal de Registro -->
     <div x-show="showModal && modalType === 'register'" x-transition.opacity x-cloak
-        class="fixed inset-0 flex items-center justify-center z-50 max-sm:px-4">
+        class="fixed inset-0 flex items-center justify-center z-50 p-4">
         <form id="registerForm" method="POST" action="{{ route('register') }}" @click.away="closeModal()"
-            class="relative bg-white rounded-lg shadow-lg w-[500px] max-sm:w-full max-w-[90vw] p-6 max-sm:p-4 max-h-[90vh] max-sm:max-h-[95vh] overflow-y-auto">
+            class="relative bg-white rounded-lg shadow-lg w-full max-w-[500px] max-sm:max-w-[320px] p-6 max-sm:p-4 max-h-[90vh] max-sm:max-h-[95vh] overflow-y-auto">
 
             <!-- Botón cerrar -->
             <button type="button" @click="closeModal()"
-                class="absolute top-4 right-4 max-sm:top-3 max-sm:right-3 text-gray-500 hover:text-gray-700">
+                class="absolute top-4 right-4 max-sm:top-3 max-sm:right-3 text-gray-500 hover:text-gray-700 z-10">
                 <svg class="w-6 h-6 max-sm:w-5 max-sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
                     </path>
@@ -178,10 +199,10 @@
             </button>
 
             @csrf
-            <h2 class="text-2xl max-sm:text-xl font-semibold mb-6 max-sm:mb-4 text-center">Crear Cuenta</h2>
+            <h2 class="text-2xl max-sm:text-xl font-semibold mb-6 max-sm:mb-4 text-center pr-8">Crear Cuenta</h2>
 
-            <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-5 max-sm:gap-3">
-                <div class="col-span-2 max-sm:col-span-1">
+            <div class="grid grid-cols-2 max-md:grid-cols-1 gap-5 max-sm:gap-3">
+                <div class="col-span-2 max-md:col-span-1">
                     <label for="register_name" class="block text-sm max-sm:text-xs font-medium text-gray-700 mb-2">
                         Nombre de usuario
                     </label>
@@ -205,7 +226,7 @@
                         class="w-full px-3 py-2 max-sm:px-2 max-sm:py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-orange text-sm max-sm:text-xs">
                 </div>
 
-                <div>
+                <div class="max-md:col-span-1">
                     <label for="register_email" class="block text-sm max-sm:text-xs font-medium text-gray-700 mb-2">
                         Correo electrónico
                     </label>
@@ -213,7 +234,7 @@
                         class="w-full px-3 py-2 max-sm:px-2 max-sm:py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-orange text-sm max-sm:text-xs">
                 </div>
 
-                <div>
+                <div class="max-md:col-span-1">
                     <label for="register_cuit" class="block text-sm max-sm:text-xs font-medium text-gray-700 mb-2">
                         CUIT
                     </label>
@@ -221,7 +242,7 @@
                         class="w-full px-3 py-2 max-sm:px-2 max-sm:py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-orange text-sm max-sm:text-xs">
                 </div>
 
-                <div>
+                <div class="max-md:col-span-1">
                     <label for="register_address" class="block text-sm max-sm:text-xs font-medium text-gray-700 mb-2">
                         Dirección
                     </label>
@@ -229,7 +250,7 @@
                         class="w-full px-3 py-2 max-sm:px-2 max-sm:py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-orange text-sm max-sm:text-xs">
                 </div>
 
-                <div>
+                <div class="max-md:col-span-1">
                     <label for="register_phone" class="block text-sm max-sm:text-xs font-medium text-gray-700 mb-2">
                         Teléfono
                     </label>
@@ -237,7 +258,7 @@
                         class="w-full px-3 py-2 max-sm:px-2 max-sm:py-1.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-orange text-sm max-sm:text-xs">
                 </div>
 
-                <div>
+                <div class="max-md:col-span-1">
                     <label for="register_provincia" class="block text-sm max-sm:text-xs font-medium text-gray-700 mb-2">
                         Provincia
                     </label>
@@ -250,7 +271,7 @@
                     </select>
                 </div>
 
-                <div>
+                <div class="max-md:col-span-1">
                     <label for="register_localidad" class="block text-sm max-sm:text-xs font-medium text-gray-700 mb-2">
                         Localidad
                     </label>
@@ -266,7 +287,7 @@
                 </div>
 
                 <button form="registerForm" type="submit"
-                    class="w-full bg-primary-orange text-white py-2 max-sm:py-1.5 px-4 rounded-md hover:bg-orange-600 transition-colors col-span-2 max-sm:col-span-1 text-sm max-sm:text-xs">
+                    class="w-full bg-primary-orange text-white py-2 max-sm:py-1.5 px-4 rounded-md hover:bg-orange-600 transition-colors col-span-2 max-md:col-span-1 text-sm max-sm:text-xs">
                     Crear Cuenta
                 </button>
             </div>
@@ -345,8 +366,6 @@
                     this.isLoading = false;
                 }
             },
-
-
 
             selectProduct(product) {
                 // Redirigir al producto seleccionado

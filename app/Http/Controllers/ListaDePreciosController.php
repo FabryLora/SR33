@@ -17,12 +17,7 @@ class ListaDePreciosController extends Controller
         $listaDePrecios = ListaDePrecios::where('id', auth()->user()->lista_de_precios_id)->get();
 
         // Mapea la colección para añadir los atributos formato y peso a cada elemento
-        $listaDePrecios = $listaDePrecios->map(function ($item) {
-            // Asumiendo que has implementado estos métodos en tu modelo
-            $item->formato = $item->getFormatoArchivo();
-            $item->peso = $item->getPesoArchivo();
-            return $item;
-        });
+
 
         return inertia('privada/listadeprecios', [
             'listaDePrecios' => $listaDePrecios

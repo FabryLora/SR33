@@ -5,6 +5,8 @@ import DefaultLayout from '../defaultLayout';
 export default function ListaDePrecios() {
     const { listaDePrecios } = usePage().props;
 
+    console.log('Lista de precios:', listaDePrecios);
+
     return (
         <DefaultLayout>
             <Head>
