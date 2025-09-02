@@ -3,6 +3,7 @@
 use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\DescargarArchivo;
 use App\Http\Controllers\HomePages;
+use App\Http\Controllers\ImagenProductoController;
 use App\Http\Controllers\NovedadesController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\SearchController;
@@ -27,7 +28,7 @@ Route::get('/p/{codigo}', [ProductoController::class, 'show'])->name('producto')
 
 Route::get('/busqueda', [ProductoController::class, 'SearchProducts'])->name('searchproducts');
 
-
+Route::get('/cargar-imagenes', [ImagenProductoController::class, 'cargarImagenes'])->name('cargar.imagenes');
 # ------------------------------------------------------------------- #
 // Ruta para la API de búsqueda (AJAX)
 Route::post('/api/search', [SearchController::class, 'search'])

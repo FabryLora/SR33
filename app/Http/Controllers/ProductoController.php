@@ -41,10 +41,6 @@ class ProductoController extends Controller
 
         $productos = $query->paginate($perPage);
 
-
-
-
-
         return Inertia::render('admin/productosAdmin', [
             'productos' => $productos,
             'categorias' => $categorias,
@@ -116,7 +112,7 @@ class ProductoController extends Controller
 
     public function show($codigo, Request $request)
     {
-        $producto = Producto::with(['categoria:id,name', 'imagenes', 'marca', 'modelos'])->where('code', $codigo)->first();
+        $producto = Producto::with(['categoria:id,name', 'imagenes', 'marca', 'modelos'])->where('code_sr', $codigo)->first();
 
         $subcategorias = SubCategoria::orderBy('order', 'asc')->get();
 
