@@ -32,9 +32,7 @@ return new class extends Migration
             $table->foreignIdFor(Marca::class)->nullable()
                 ->constrained('marcas')
                 ->nullOnDelete();
-            $table->foreignIdFor(Modelo::class)->nullable()
-                ->constrained('modelos')
-                ->nullOnDelete();
+
             $table->timestamps();
         });
     }

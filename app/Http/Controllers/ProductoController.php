@@ -30,11 +30,9 @@ class ProductoController extends Controller
 
         $categorias = Categoria::select('id', 'name')->get();
         $marcas = Marca::orderBy('order', 'asc')->get();
-        $modelos = Modelo::orderBy('order', 'asc')->get();
-
         $perPage = $request->input('per_page', default: 10);
 
-        $query = Producto::query()->orderBy('order', 'asc')->with(['marca', 'modelo', 'categoria', 'imagenes']);
+        $query = Producto::query()->orderBy('order', 'asc')->with(['marca', 'modelos', 'categoria', 'imagenes']);
 
         if ($request->has('search') && !empty($request->search)) {
             $searchTerm = $request->search;
@@ -51,7 +49,7 @@ class ProductoController extends Controller
             'productos' => $productos,
             'categorias' => $categorias,
             'marcas' => $marcas,
-            'modelos' => $modelos,
+
         ]);
     }
 
@@ -89,7 +87,7 @@ class ProductoController extends Controller
         $query->orderBy('order', 'asc');
 
         // Ejecutar query con paginación
-        $productos = $query->with(['marca', 'modelo', 'imagenes', 'categoria'])
+        $productos = $query->with(['marca', 'modelos', 'imagenes', 'categoria'])
             ->paginate(15)
             ->appends($request->query());
 
@@ -118,14 +116,14 @@ class ProductoController extends Controller
 
     public function show($codigo, Request $request)
     {
-        $producto = Producto::with(['categoria:id,name', 'imagenes', 'marca', 'modelo'])->where('code', $codigo)->first();
+        $producto = Producto::with(['categoria:id,name', 'imagenes', 'marca', 'modelos'])->where('code', $codigo)->first();
 
         $subcategorias = SubCategoria::orderBy('order', 'asc')->get();
 
         $categorias = Categoria::select('id', 'name', 'order')->orderBy('order', 'asc')->get();
 
         // Obtener productos relacionados por marca y modelo
-        $productosRelacionados = Producto::where('id', '!=', $producto->id)->with(['categoria:id,name', 'imagenes', 'marca', 'modelo'])->orderBy('order', 'asc')->limit(3)->get();
+        $productosRelacionados = Producto::where('id', '!=', $producto->id)->with(['categoria:id,name', 'imagenes', 'marca', 'modelos'])->orderBy('order', 'asc')->limit(3)->get();
 
         return view('producto', [
             'producto' => $producto,
@@ -145,7 +143,7 @@ class ProductoController extends Controller
         $qty = $request->input('qty', 1); // Valor por defecto para qty
         $carrito = Cart::content();
 
-        $query = Producto::with(['imagenes', 'marca', 'modelo', 'precio', 'categoria'])->orderBy('order', 'asc');
+        $query = Producto::with(['imagenes', 'marca', 'modelos', 'precio', 'categoria'])->orderBy('order', 'asc');
 
         if ($request->filled('tipo')) {
             $query->where('categoria_id', $request->tipo);
@@ -157,8 +155,11 @@ class ProductoController extends Controller
         }
 
         if ($request->filled('modelo')) {
-            $query->where('modelo_id', $request->modelo);
+            $query->whereHas('modelos', function ($q) use ($request) {
+                $q->where('modelos.id', $request->modelo);
+            });
         }
+
 
         // Filtro por código
         if ($request->filled('code')) {
@@ -218,7 +219,7 @@ class ProductoController extends Controller
             ->with([
                 'imagenes',
                 'marca',
-                'modelo',
+                'modelos',
                 'precio',
                 'ofertas' => function ($query) use ($userId) {
                     $query->where('user_id', $userId)

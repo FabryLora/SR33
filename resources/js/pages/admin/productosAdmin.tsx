@@ -258,25 +258,6 @@ export default function ProductosAdmin() {
                                             ))}
                                         </select>
 
-                                        <label htmlFor="subcategoria">
-                                            Modelos <span className="text-red-500">*</span>
-                                        </label>
-                                        <select
-                                            onChange={(e) => setData('modelo_id', e.target.value)}
-                                            className="focus:outline-primary-orange rounded-md p-2 outline outline-gray-300 focus:outline"
-                                            name="modelos"
-                                            id="modelos"
-                                        >
-                                            <option value="">Seleccionar modelo</option>
-                                            {modelos
-                                                .filter((modelo) => modelo?.marca_id == data.marca_id)
-                                                .map((modelo) => (
-                                                    <option key={modelo.id} value={modelo.id}>
-                                                        {modelo.name}
-                                                    </option>
-                                                ))}
-                                        </select>
-
                                         <label>Imágenes del Producto</label>
                                         <input
                                             type="file"

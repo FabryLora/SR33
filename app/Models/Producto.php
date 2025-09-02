@@ -14,9 +14,14 @@ class Producto extends Model
 
 
 
-    public function modelo()
+    public function modelos()
     {
-        return $this->belongsTo(Modelo::class);
+        return $this->belongsToMany(
+            Modelo::class,       // Modelo relacionado
+            'modelo_productos',  // Tabla intermedia
+            'producto_id',       // FK de producto en la pivote
+            'modelo_id'          // FK de modelo en la pivote
+        );
     }
     public function marca()
     {

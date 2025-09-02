@@ -52,7 +52,7 @@ class ActualizarPreciosJob implements ShouldQueue
             }
 
             $codigo = trim($row['A']);
-            $precio = trim($row['B']);
+            $precio = trim($row['D']);
 
             Log::info("Procesando - Código: '{$codigo}', Precio: '{$precio}'");
 

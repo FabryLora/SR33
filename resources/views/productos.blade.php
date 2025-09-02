@@ -23,7 +23,7 @@
                     @forelse($productos as $producto)
                         <a href="{{ "/p/" . $producto->code }}"
                             class=" transition transform hover:-translate-y-1 hover:shadow-lg duration-300
-                                                                                                                                                                                                                                    h-[420px] max-sm:h-auto flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
+                                                                                                                                                                                                                                            h-[420px] max-sm:h-auto flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
                             <div class="h-full flex flex-col">
                                 @if ($producto->imagenes->count() > 0)
                                     <div class="relative min-h-[287px] max-sm:h-[200px]">

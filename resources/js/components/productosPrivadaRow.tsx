@@ -29,7 +29,7 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
 
     const { post, setData } = useForm({
         id: producto?.id,
-        name: producto?.code,
+        name: producto?.name,
         qty: cantidad,
         price: producto?.precio?.precio,
         rowId: producto?.rowId,
@@ -38,7 +38,7 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
     useEffect(() => {
         setData({
             id: producto?.id,
-            name: producto?.code,
+            name: producto?.name,
             qty: cantidad,
             price: producto?.precio?.precio,
             rowId: producto?.rowId,
@@ -84,8 +84,14 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                 <p className="">{producto?.code_sr}</p>
                 <p className="">{producto?.code}</p>
                 <p className="">{producto?.marca?.name}</p>
-                <p className="">{producto?.modelo?.name}</p>
-                <p className="">{producto?.categoria?.name}</p>
+                <div className="flex flex-row flex-wrap items-center justify-center gap-2">
+                    {producto?.modelos?.map((modelo) => (
+                        <span className="bg-primary-orange rounded-sm px-2 py-1 font-medium text-white" key={modelo.id}>
+                            {modelo.name}{' '}
+                        </span>
+                    ))}
+                </div>
+                <p className="px-2 text-center">{producto?.categoria?.name}</p>
 
                 {/* mostrar uno debajo del otro */}
 

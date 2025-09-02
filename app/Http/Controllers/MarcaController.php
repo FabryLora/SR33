@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Marca;
 use DragonCode\Support\Facades\Filesystem\File;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class MarcaController extends Controller
 
         $perPage = $request->input('per_page', 10);
 
-        $query = Marca::query()->orderBy('order', 'asc');
+        $query = Marca::query()->with('categoria')->orderBy('order', 'asc');
 
         if ($request->has('search') && !empty($request->search)) {
             $searchTerm = $request->search;
@@ -25,10 +26,12 @@ class MarcaController extends Controller
         }
 
         $marcas = $query->paginate($perPage);
+        $categorias = Categoria::orderBy('order', 'asc')->get();
 
 
         return Inertia::render('admin/marcasAdmin', [
             'marcas' => $marcas,
+            'categorias' => $categorias,
         ]);
     }
 
@@ -40,6 +43,7 @@ class MarcaController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'order' => 'nullable|string|max:255',
+            'categoria_id' => 'nullable|exists:categorias,id',
         ]);
 
 
@@ -60,6 +64,7 @@ class MarcaController extends Controller
         $data = $request->validate([
             'name' => 'sometimes|string|max:255',
             'order' => 'nullable|string|max:255',
+            'categoria_id' => 'nullable|exists:categorias,id',
         ]);
 
 

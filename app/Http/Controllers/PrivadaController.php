@@ -31,7 +31,7 @@ class   PrivadaController extends Controller
         $productosIds = $carrito->pluck('id')->toArray();
 
         // Traer todos los productos con esos IDs
-        $productos = Producto::whereIn('id', $productosIds)->with(['imagenes', 'marca', 'modelo', 'precio', 'categoria'])->get();
+        $productos = Producto::whereIn('id', $productosIds)->with(['imagenes', 'marca', 'modelos', 'precio', 'categoria'])->get();
 
         $productosConRowId = $productos->map(function ($producto) use ($carrito) {
             // Buscar el item del carrito que corresponde a este producto

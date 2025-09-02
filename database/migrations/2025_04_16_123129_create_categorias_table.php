@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('order')->default("zzz");
             $table->string('name')->nullable();
+            $table->string('code')->nullable();
             $table->string('image')->nullable();
 
             $table->timestamps();

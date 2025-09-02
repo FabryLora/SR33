@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Categoria;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +16,8 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('order')->default('zzz');
+            $table->string('code')->nullable();
+            $table->foreignIdFor(Categoria::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

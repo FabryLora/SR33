@@ -1,6 +1,6 @@
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useForm } from '@inertiajs/react';
+import { useForm, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
@@ -8,9 +8,12 @@ import toast from 'react-hot-toast';
 export default function MarcasAdminRow({ marca }) {
     const [edit, setEdit] = useState(false);
 
+    const { categorias } = usePage().props;
+
     const updateForm = useForm({
         name: marca?.name,
         order: marca?.order,
+        categoria_id: marca?.categoria_id,
         id: marca?.id,
     });
 
@@ -48,6 +51,7 @@ export default function MarcasAdminRow({ marca }) {
         <tr className={`border text-black odd:bg-gray-100 even:bg-white`}>
             <td className="align-middle">{marca?.order}</td>
             <td className="h-[90px] align-middle">{marca?.name}</td>
+            <td className="h-[90px] align-middle">{marca?.categoria?.name}</td>
 
             <td className="w-[140px] text-center">
                 <div className="flex flex-row justify-center gap-3">
@@ -91,6 +95,25 @@ export default function MarcasAdminRow({ marca }) {
                                         value={updateForm?.data?.name}
                                         onChange={(e) => updateForm.setData('name', e.target.value)}
                                     />
+
+                                    <label htmlFor="nombree">
+                                        Tipo de producto <span className="text-red-500">*</span>
+                                    </label>
+
+                                    <select
+                                        value={updateForm?.data?.categoria_id}
+                                        onChange={(e) => updateForm.setData('categoria_id', e.target.value)}
+                                        className="focus:outline-primary-orange rounded-md p-2 outline outline-gray-300 focus:outline"
+                                        name=""
+                                        id=""
+                                    >
+                                        <option value="">Seleccionar un tipo de producto</option>
+                                        {categorias.map((categoria) => (
+                                            <option key={categoria.id} value={categoria.id}>
+                                                {categoria.name}
+                                            </option>
+                                        ))}
+                                    </select>
 
                                     <div className="flex justify-end gap-4">
                                         <button

@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\ActualizarPreciosJob;
 use App\Jobs\ActualizarSubProductosDesdeCSVJob;
+use App\Jobs\TestJob;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
@@ -22,11 +24,11 @@ class ImportarSubProductosCsv extends Command
         }
 
         // Despachar usando path relativo a storage/app
-        $rutaCompleta = 'public/' . $archivo;
 
-        ActualizarSubProductosDesdeCSVJob::dispatch($rutaCompleta);
 
-        $this->info("Importación iniciada con éxito para el archivo: {$rutaCompleta}");
+        TestJob::dispatch($archivo);
+
+        $this->info("Importación iniciada con éxito para el archivo: {$archivo}");
         return 0;
     }
 }

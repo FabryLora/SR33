@@ -18,8 +18,8 @@ class Marca extends Model
         return $this->hasMany(Producto::class)->orderBy('order', 'asc');
     }
 
-    public function modelos()
+    public function categoria()
     {
-        return $this->hasMany(Modelo::class);
+        return $this->belongsTo(Categoria::class)->orderBy('order', 'asc');
     }
 }

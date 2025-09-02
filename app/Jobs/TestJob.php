@@ -2,11 +2,10 @@
 
 namespace App\Jobs;
 
-use App\Models\Categoria;
+
 use App\Models\ListaProductos;
 use App\Models\Marca;
 use App\Models\Modelo;
-use App\Models\ModeloProducto;
 use App\Models\Producto;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Bus\Queueable;
@@ -17,20 +16,20 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class ImportarProductosDesdeExcelJob implements ShouldQueue
+class TestJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $archivoPath;
+    protected $archivo;
 
-    public function __construct($archivoPath)
+    public function __construct($archivo)
     {
-        $this->archivoPath = $archivoPath;
+        $this->archivo = $archivo;
     }
 
     public function handle()
     {
-        $filePath = Storage::path($this->archivoPath);
+        $filePath = Storage::path($this->archivo);
         $spreadsheet = IOFactory::load($filePath);
         $sheet = $spreadsheet->getActiveSheet();
         $rows = $sheet->toArray(null, true, true, true);
@@ -51,47 +50,42 @@ class ImportarProductosDesdeExcelJob implements ShouldQueue
                 continue;
             }
 
-            $codigo_sr = trim($row['B']);
-            $name = trim($row['C']);
-            $desc = trim($row['D']);
-            $categoria_code = trim($row['E']);
-            $subcategoria_code = trim($row['F']);
-            $codigo_original = trim($row['G']);
+            $marca_code = trim($row['F']);
             $modelos_raw = trim($row['H']);
 
+            if ($marca_code === '') {
+                Log::warning("Fila {$index}: sin código de marca (columna F vacía).");
+                continue;
+            }
 
+            if ($modelos_raw === '') {
+                Log::warning("Fila {$index}: sin modelos (columna H vacía).");
+                continue;
+            }
+
+
+            // Normalizamos la lista de modelos: tolera ',', ';', '/', '|'
             $normalizado = str_replace([';', '/', '|'], ',', $modelos_raw);
             $partes      = array_map(
                 fn($m) => trim($m),
                 explode(',', $normalizado)
             );
 
+            // Limpiamos vacíos y duplicados (por si vienen "modelo, modelo ")
             $modelos = array_values(array_unique(array_filter($partes, fn($m) => $m !== '')));
 
 
-
-            $producto = Producto::updateOrCreate([
-                'code_sr' => $codigo_sr
-            ], [
-                'name' => $name,
-                'desc' => $desc,
-                'code' => $codigo_original,
-                'categoria_id' => Categoria::where('code', $categoria_code)->first()->id ?? null,
-                'marca_id' => Marca::where('code', $subcategoria_code)->first()->id ?? null,
-            ]);
-
-
-            if ($modelos && $producto) {
-                foreach ($modelos as $modelo) {
-                    $modelo_id = Modelo::where('name', $modelo)->first()->id ?? null;
-                    if ($modelo_id != null) {
-                        ModeloProducto::firstOrCreate(
-                            [
-                                'producto_id' => $producto->id,
-                                'modelo_id' => $modelo_id
-                            ]
-                        );
-                    }
+            foreach ($modelos as $modelo) {
+                $marca_id = Marca::where('code', $marca_code)->first()->id ?? null;
+                if ($marca_id) {
+                    Modelo::updateOrCreate(
+                        [
+                            'name' => $modelo
+                        ],
+                        [
+                            'marca_id' => $marca_id
+                        ]
+                    );
                 }
             }
         }

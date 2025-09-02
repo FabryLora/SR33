@@ -140,7 +140,7 @@ export default function ProductosPrivada({ categorias, subcategorias }) {
                             <p className="max-sm:hidden">Cód. SR</p>
                             <p>Cód. Original</p>
                             <p>Marca</p>
-                            <p className="">Modelo</p>
+                            <p className="text-center">Modelo</p>
                             <p className="text-center max-sm:hidden">Tipo de producto</p>
                             <p className="text-right max-sm:hidden">Precio</p>
                             <p className="text-center max-sm:hidden">Descuentos</p>

@@ -24,6 +24,8 @@ export default function ProductosAdminRow({ producto }) {
         id: producto?.id,
     });
 
+    console.log(producto?.modelos);
+
     const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         post(route('admin.productos.update'), {
@@ -113,7 +115,15 @@ export default function ProductosAdminRow({ producto }) {
             <td className="align-middle">{producto?.name}</td>
             <td className="align-middle">{producto?.categoria?.name}</td>
             <td className="align-middle">{producto?.marca?.name}</td>
-            <td className="align-middle">{producto?.modelo?.name}</td>
+            <td className="align-middle">
+                <div className="flex flex-row items-center justify-center gap-2">
+                    {producto?.modelos?.map((elem) => (
+                        <span key={elem.id} className="bg-primary-orange h-fit rounded-sm px-2 py-1 font-medium text-white">
+                            {elem.name}
+                        </span>
+                    ))}
+                </div>
+            </td>
 
             <td className="flex h-[90px] flex-row items-center justify-center">
                 <Switch routeName="cambiarDestacado" id={producto?.id} status={producto?.destacado == 1} />
@@ -258,26 +268,6 @@ export default function ProductosAdminRow({ producto }) {
                                                 {marca.name}
                                             </option>
                                         ))}
-                                    </select>
-
-                                    <label htmlFor="subcategoria">
-                                        Modelos <span className="text-red-500">*</span>
-                                    </label>
-                                    <select
-                                        value={data.modelo_id}
-                                        onChange={(e) => setData('modelo_id', e.target.value)}
-                                        className="focus:outline-primary-orange rounded-md p-2 outline outline-gray-300 focus:outline"
-                                        name="modelos"
-                                        id="modelos"
-                                    >
-                                        <option value="">Seleccionar modelo</option>
-                                        {modelos
-                                            .filter((modelo) => modelo?.marca_id == data.marca_id)
-                                            .map((modelo) => (
-                                                <option key={modelo.id} value={modelo.id}>
-                                                    {modelo.name}
-                                                </option>
-                                            ))}
                                     </select>
 
                                     <label>Imágenes del Producto</label>
