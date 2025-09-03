@@ -42,6 +42,7 @@ class HomePages extends Controller
         $marcas = Marca::orderBy('order', 'asc')->get();
         $modelos = Modelo::orderBy('order', 'asc')->get();
 
+
         return view('home', [
             'sliders' => $sliders,
             'bannerPortada' => $bannerPortada,

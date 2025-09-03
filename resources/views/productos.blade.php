@@ -23,7 +23,7 @@
                     @forelse($productos as $producto)
                         <a href="{{ "/p/" . $producto->code_sr }}"
                             class=" transition transform hover:-translate-y-1 hover:shadow-lg duration-300
-                                                                                                                                                                                                                                                            h-[420px] max-sm:h-auto flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
+                                                                                                                                                                                                        h-[420px]  flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
                             <div class="h-full flex flex-col">
                                 @if ($producto->imagenes->count() > 0)
                                     <div class="relative min-h-[287px] max-sm:h-[200px]">
@@ -31,26 +31,33 @@
                                             class=" w-full h-full  object-contain rounded-t-sm">
                                         <h2
                                             class="absolute left-3 bottom-2 text-[14px] font-semibold uppercase text-primary-orange">
-                                            {{$producto->categoria->name}}
+                                            {{$producto->categoria->name ?? ''}}
                                         </h2>
                                     </div>
 
                                 @else
-                                    <div
-                                        class="w-full min-h-[243px] max-sm:min-h-[200px] bg-gray-100 flex items-center justify-center text-gray-500 ">
-                                        <span>Sin imagen</span>
+                                    <div class="relative min-h-[287px] max-sm:h-[200px]">
+                                        <img src={{$logos->logo_principal}} alt="{{ $producto->name }}"
+                                            class=" w-full h-full  object-contain rounded-t-sm">
+                                        <h2
+                                            class="absolute left-3 bottom-2 text-[14px] font-semibold uppercase text-primary-orange">
+                                            {{$producto->categoria->name ?? ''}}
+                                        </h2>
                                     </div>
                                 @endif
                                 <div class="h-1 bg-[#DEDFE0] mx-3"></div>
-                                <div class="flex flex-col justify-evenly h-full max-sm:p-3 px-3">
+                                <div class="flex flex-col justify-start gap-2 my-2 h-full max-sm:p-3 px-3">
                                     <div class="flex flex-row justify-between">
-                                        <h3
-                                            class="text-black group-hover:text-green-700 text-[16px] max-sm:text-[14px] transition-colors duration-300">
-                                            Cod. Or.: {{ $producto->code }}
-                                        </h3>
+                                        @if ($producto->code)
+
+                                            <h3
+                                                class="text-black group-hover:text-green-700 text-[16px] max-sm:text-[14px] transition-colors duration-300">
+                                                Cod. Or.: {{ $producto->code }}
+                                            </h3>
+                                        @endif
                                         <h3
                                             class="text-primary-orange group-hover:text-green-700 text-[16px] max-sm:text-[14px] transition-colors duration-300">
-                                            Cod. SR: {{ $producto->code_sr }}
+                                            Cod.: {{ $producto->code_sr }}
                                         </h3>
                                     </div>
                                     <p

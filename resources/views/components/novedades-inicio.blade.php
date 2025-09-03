@@ -2,7 +2,7 @@
 
 <div class="w-full py-10 sm:py-16 md:py-20 max-sm:py-6">
 
-    <div class="mx-auto flex max-w-[1200px] max-sm:max-w-full max-sm:px-4 flex-col gap-6 sm:gap-8 max-sm:gap-4">
+    <div class="mx-auto flex max-w-[1200px] max-sm:max-w-full max-sm:px-4 flex-col gap-6 sm:gap-2 max-sm:gap-4">
         <div class="flex flex-row gap-4 sm:flex-row sm:items-center justify-between sm:gap-0 max-sm:gap-3">
             <h2 class="text-2xl font-bold sm:text-2xl md:text-3xl max-sm:text-xl">Novedades</h2>
             <a href="{{ url('/novedades') }}"

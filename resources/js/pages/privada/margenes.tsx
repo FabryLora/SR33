@@ -103,7 +103,7 @@ export default function Margenes() {
                     </div>
 
                     {/* Márgenes por Tipo */}
-                    <div className="flex flex-col gap-5">
+                    <div className="grid w-full grid-cols-3 grid-rows-7 gap-5">
                         {tipo_de_productos.map((tipo) => (
                             <div key={tipo?.id} className="flex flex-col gap-4">
                                 <label htmlFor={`margen-${tipo?.id}`} className="font-bold">
@@ -127,7 +127,7 @@ export default function Margenes() {
                         <button
                             onClick={guardarMargenes}
                             disabled={processing}
-                            className="bg-primary-orange hover:text-primary-orange hover:outline-primary-orange w-[165px] rounded-sm px-4 py-2 text-white transition duration-300 hover:bg-transparent hover:outline disabled:opacity-50"
+                            className="bg-primary-orange hover:text-primary-orange hover:outline-primary-orange col-span-3 max-h-[40px] w-[165px] rounded-sm px-4 py-2 text-white transition duration-300 hover:bg-transparent hover:outline disabled:opacity-50"
                         >
                             {processing ? 'Guardando...' : 'Guardar porcentajes'}
                         </button>

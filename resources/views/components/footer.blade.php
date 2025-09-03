@@ -34,12 +34,13 @@
         </div>
 
         {{-- Secciones - Desktop/Tablet --}}
-        <div class="hidden flex-col  gap-10 lg:flex">
+        <div class="hidden flex-col  gap-5 lg:flex">
             <h2 class="text-lg font-bold text-white">Secciones</h2>
-            <div class="grid h-fit grid-flow-col grid-cols-2 grid-rows-2 gap-x-20 gap-y-3">
+            <div class="grid h-fit grid-flow-col grid-cols-2 grid-rows-3 gap-x-20 gap-y-3 ">
                 <a href="{{ route('nosotros') }}" class="text-[15px] text-white/80">Nosotros</a>
                 <a href="{{ route('productos') }}" class="text-[15px] text-white/80">Productos</a>
-                <a href="{{ route('calidad') }}" class="text-[15px] text-white/80">Novedades</a>
+                <a href="{{ route('calidad') }}" class="text-[15px] text-white/80">Calidad</a>
+                <a href="/novedades" class="text-[15px] text-white/80">Novedades</a>
                 <a href="{{ route('contacto') }}" class="text-[15px] text-white/80">Contacto</a>
             </div>
         </div>
@@ -57,7 +58,7 @@
 
 
         {{-- Newsletter --}}
-        <div class="flex h-full flex-col items-center gap-6 lg:items-start lg:gap-10">
+        <div class="flex h-full flex-col items-center gap-6 lg:items-start lg:gap-5">
             <h2 class="text-lg font-bold text-white ">Suscribite al Newsletter</h2>
 
             {{-- Mensaje de confirmación --}}
@@ -103,7 +104,7 @@
         </div>
 
         {{-- Datos de contacto --}}
-        <div class="flex h-full flex-col items-center gap-6 lg:items-start lg:gap-10">
+        <div class="flex h-full flex-col items-center gap-6 lg:items-start lg:gap-5">
             <h2 class="text-lg font-bold text-white">Datos de contacto</h2>
             <div class="flex flex-col justify-center gap-4">
                 @if(!empty($contacto->location))

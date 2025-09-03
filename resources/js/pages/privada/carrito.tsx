@@ -162,7 +162,7 @@ export default function Carrito({
                         <h2 className="text-xl font-bold">Entrega</h2>
                     </div>
 
-                    <div className="flex h-fit w-full flex-col justify-center gap-4 py-4 text-[18px] text-[#74716A]">
+                    <div className="flex h-fit w-full flex-col justify-center gap-4 py-4 text-[18px]">
                         {/* Opción: Retiro Cliente */}
                         <div
                             className={`flex cursor-pointer items-center justify-between rounded-lg pl-3`}
@@ -251,7 +251,7 @@ export default function Carrito({
                         <h2 className="p-3 text-xl font-bold">Pedido</h2>
                     </div>
 
-                    <div className="flex flex-col justify-between gap-4 border-b px-4 py-4 text-xl text-[18px] text-[#74716A]">
+                    <div className="flex flex-col justify-between gap-4 border-b px-4 py-4 text-xl text-[18px]">
                         <div className="flex w-full flex-row justify-between">
                             <p>Subtotal</p>
                             <p>
@@ -293,7 +293,7 @@ export default function Carrito({
                             </p>
                         </div>
                     </div>
-                    <div className="flex flex-row justify-between p-3 text-[#74716A]">
+                    <div className="flex flex-row justify-between p-3">
                         <p className="text-2xl font-medium">
                             Total <span className="text-base">{'(IVA incluido)'}</span>
                         </p>

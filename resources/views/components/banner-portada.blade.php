@@ -4,8 +4,8 @@
     </div>
 
     <div class="flex flex-col w-full justify-center max-md:items-center max-md:justify-center   ">
-        <div class="flex flex-col h-fit px-20  max-md:py-0 max-md:px-2 gap-10 max-md:gap-4">
-            <h2 class="text-white text-[32px] font-bold max-md:text-center">
+        <div class="flex flex-col h-fit px-20  max-md:py-0 max-md:px-2 gap-8 max-md:gap-4">
+            <h2 class="text-white leading-tight text-[32px] font-bold max-md:text-center">
                 {{ $bannerPortada->title ?? '' }}
             </h2>
             <div

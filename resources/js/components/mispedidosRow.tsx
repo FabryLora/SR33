@@ -227,7 +227,7 @@ export default function MispedidosRow({ pedido }) {
             )}
 
             {/* Vista desktop - Grid */}
-            <div className="hidden grid-cols-7 gap-2 border-b py-2 text-[#74716A] md:grid">
+            <div className="hidden grid-cols-7 gap-2 border-b py-2 md:grid">
                 <div className="flex items-center">
                     <div className="flex h-[80px] w-[80px] items-center justify-center bg-[#F5F5F5]">
                         <svg xmlns="http://www.w3.org/2000/svg" width="43" height="43" viewBox="0 0 43 43" fill="none">

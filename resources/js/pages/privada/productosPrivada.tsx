@@ -27,15 +27,14 @@ export default function ProductosPrivada({ categorias, subcategorias }) {
         localStorage.setItem('margenSwitch', JSON.stringify(margenSwitch));
     }, [margenSwitch]);
 
-    const handlePageChange = (page) => {
+    const handlePageChange = (url) => {
         router.get(
-            route('index.privada.productos'),
-            {
-                page: page,
-            },
+            url,
+            {},
             {
                 preserveState: true,
                 preserveScroll: true,
+                replace: true,
             },
         );
     };
@@ -163,7 +162,7 @@ export default function ProductosPrivada({ categorias, subcategorias }) {
                                 {productos.links.map((link, index) => (
                                     <button
                                         key={index}
-                                        onClick={() => link.url && handlePageChange(link.url.split('page=')[1])}
+                                        onClick={() => link.url && handlePageChange(link.url)}
                                         disabled={!link.url}
                                         className={`px-4 py-2 max-sm:px-2 max-sm:py-1 max-sm:text-[12px] ${
                                             link.active

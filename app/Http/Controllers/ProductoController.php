@@ -84,7 +84,7 @@ class ProductoController extends Controller
 
         // Ejecutar query con paginación
         $productos = $query->with(['marca', 'modelos', 'imagenes', 'categoria'])
-            ->paginate(15)
+            ->paginate(16)
             ->appends($request->query());
 
         // Si solo hay un producto en total (no en la página actual), redirigir
@@ -119,7 +119,7 @@ class ProductoController extends Controller
         $categorias = Categoria::select('id', 'name', 'order')->orderBy('order', 'asc')->get();
 
         // Obtener productos relacionados por marca y modelo
-        $productosRelacionados = Producto::where('id', '!=', $producto->id)->with(['categoria:id,name', 'imagenes', 'marca', 'modelos'])->orderBy('order', 'asc')->limit(3)->get();
+        $productosRelacionados = Producto::where('categoria_id',  $producto->categoria_id)->with(['categoria:id,name', 'imagenes', 'marca', 'modelos'])->orderBy('order', 'asc')->limit(4)->get();
 
         return view('producto', [
             'producto' => $producto,
@@ -169,7 +169,7 @@ class ProductoController extends Controller
 
 
 
-        $productos = $query->paginate(perPage: $perPage);
+        $productos = $query->paginate($perPage)->withQueryString();
 
         // Modificar los productos para agregar rowId y qty del carrito
         $productos->getCollection()->transform(function ($producto) use ($carrito, $qty) {

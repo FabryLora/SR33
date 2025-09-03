@@ -4,6 +4,7 @@ import { router, useForm, usePage } from '@inertiajs/react';
 import { Trash2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import defaultImage from '../../images/logos/logo-sr33.png';
 /* import defaultPhoto from '../../images/defaultPhoto.png'; */
 
 export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) {
@@ -79,7 +80,7 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
             {/* Vista desktop - tabla */}
             <div className="grid h-fit grid-cols-11 items-center border-b border-gray-200 py-2 text-[15px] text-black max-sm:hidden">
                 <div className="h-[80px] w-[80px] rounded-sm border">
-                    <img src={producto?.imagenes[0]?.image} className="h-full w-full object-contain" alt="" />
+                    <img src={producto?.imagenes[0]?.image ?? defaultImage} className="h-full w-full rounded-sm object-contain" alt="" />
                 </div>
                 <p className="">{producto?.code_sr}</p>
                 <p className="">{producto?.code}</p>

@@ -122,11 +122,13 @@ const SearchBar = () => {
                                     onChange={(e) => setData('marca', e.target.value)}
                                 >
                                     <option value="">Elegir marca</option>
-                                    {marcas?.map((marca) => (
-                                        <option key={marca.id} value={marca.id}>
-                                            {marca.name}
-                                        </option>
-                                    ))}
+                                    {marcas
+                                        ?.filter((marc) => !data.tipo || marc?.categoria_id == data.tipo)
+                                        ?.map((marca) => (
+                                            <option key={marca.id} value={marca.id}>
+                                                {marca.name}
+                                            </option>
+                                        ))}
                                 </select>
                                 <ClearFilterButton filterValue={data.marca} filterName="marca" />
                             </div>

@@ -165,7 +165,7 @@ export default function ArchivoCalidadAdminRow({ archivo }) {
                                             className="border-primary-orange text-primary-orange hover:bg-primary-orange cursor-pointer rounded-md border px-2 py-1 transition duration-300 hover:text-white"
                                             htmlFor="archivo"
                                         >
-                                            Elegir imagen
+                                            Elegir Archivo
                                         </label>
                                         <p className="self-center px-2">{updateForm?.data?.archivo?.name}</p>
                                     </div>
