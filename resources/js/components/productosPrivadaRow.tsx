@@ -85,12 +85,8 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                 <p className="">{producto?.code_sr}</p>
                 <p className="">{producto?.code}</p>
                 <p className="">{producto?.marca?.name}</p>
-                <div className="flex flex-row flex-wrap items-center justify-center gap-2">
-                    {producto?.modelos?.map((modelo) => (
-                        <span className="bg-primary-orange rounded-sm px-2 py-1 font-medium text-white" key={modelo.id}>
-                            {modelo.name}{' '}
-                        </span>
-                    ))}
+                <div className="flex flex-col items-center justify-center gap-2">
+                    {producto?.modelos?.map((modelo) => <span key={modelo.id}>{modelo.name} </span>)}
                 </div>
                 <p className="px-2 text-center">{producto?.categoria?.name}</p>
 

@@ -74,13 +74,13 @@
         <!-- Navegación desktop -->
         <div class="hidden lg:flex gap-8 max-xl:gap-6 items-center">
             @foreach(($isPrivate ? $privateLinks : $defaultLinks) as $link)
-                <a href="{{ $link['href'] }}" :class="scrolled ? 'text-black' : 'text-white'"
-                    class="text-[16px] max-xl:text-[15px] font-normal hover:text-primary-orange transition-colors duration-300 whitespace-nowrap
-                                                                                                                                                                                                                            ">
+                <a href="{{ $link['href'] }}" :class="scrolled ? 'text-black' : 'text-white'" class="text-[16px] max-xl:text-[15px] font-normal hover:text-primary-orange transition-colors duration-300 whitespace-nowrap
+                    {{ request()->is(ltrim($link['href'], '/')) ? 'font-bold text-primary-orange' : '' }}">
                     {{ $link['title'] }}
                 </a>
             @endforeach
         </div>
+
 
         <!-- Botones de acción -->
         <div class="flex items-center gap-3 max-sm:gap-2">
@@ -118,7 +118,7 @@
             @foreach(($isPrivate ? $privateLinks : $defaultLinks) as $link)
                 <a href="{{ $link['href'] }}"
                     class="block px-4 py-3 max-sm:px-3 max-sm:py-2 text-sm max-sm:text-xs text-gray-700 hover:bg-gray-50 hover:text-primary-orange transition-colors duration-300 border-b border-gray-100 last:border-b-0
-                                                                                                                                                                                                                            "
+                                                                                                                                                                                                                                "
                     @click="mobileMenuOpen = false">
                     {{ $link['title'] }}
                 </a>

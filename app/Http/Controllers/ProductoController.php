@@ -65,7 +65,9 @@ class ProductoController extends Controller
         }
 
         if ($request->filled('modelo')) {
-            $query->where('modelo_id', $request->modelo);
+            $query->whereHas('modelos', function ($q) use ($request) {
+                $q->where('modelos.id', $request->modelo);
+            });
         }
 
         // Filtro por código
@@ -380,7 +382,7 @@ class ProductoController extends Controller
             // Validaciones del producto
             'order' => 'nullable|sometimes|max:255',
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255',
+            'code' => 'nullable|sometimes|string|max:255',
             'code_sr' => 'nullable|sometimes|string|max:255',
             'desc' => 'nullable|string',
             'unidad_pack' => 'nullable|integer',
@@ -444,7 +446,7 @@ class ProductoController extends Controller
 
             'order' => 'nullable|sometimes|max:255',
             'name' => 'required|string|max:255',
-            'code' => 'required|string|max:255',
+            'code' => 'nullable|sometimes|string|max:255',
             'code_sr' => 'nullable|sometimes|string|max:255',
             'desc' => 'nullable|string',
             'unidad_pack' => 'nullable|integer',

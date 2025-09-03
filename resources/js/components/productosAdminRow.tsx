@@ -24,8 +24,6 @@ export default function ProductosAdminRow({ producto }) {
         id: producto?.id,
     });
 
-    console.log(producto?.modelos);
-
     const handleUpdate = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         post(route('admin.productos.update'), {

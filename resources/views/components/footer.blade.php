@@ -167,7 +167,7 @@
 
 
                 @if(!empty($contacto->wp))
-                    <a href="https://wa.me/{{ preg_replace('/\s/', '', $contacto->wp) }}" target="_blank"
+                    <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $contacto['wp']) }}" target="_blank"
                         rel="noopener noreferrer" class="flex items-center gap-3 transition-opacity hover:opacity-80">
                         <div class="shrink-0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">

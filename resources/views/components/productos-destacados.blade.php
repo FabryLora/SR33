@@ -11,7 +11,7 @@
         @foreach ($productos as $producto)
             <a href="{{ "/p/" . $producto->code_sr }}"
                 class=" transition transform hover:-translate-y-1 hover:shadow-lg duration-300
-                                                                                                                                                                                                h-[420px]  flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
+                                                                                                                                                                                                    h-[420px]  flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
                 <div class="h-full flex flex-col">
                     @if ($producto->imagenes->count() > 0)
                         <div class="relative min-h-[287px] max-sm:h-[200px]">
@@ -38,7 +38,7 @@
 
                                 <h3
                                     class="text-black group-hover:text-green-700 text-[16px] max-sm:text-[14px] transition-colors duration-300">
-                                    Cod. Or.: {{ $producto->code }}
+                                    Cod. Or.: {{ Str::limit($producto->code, 10, '...') }}
                                 </h3>
                             @endif
                             <h3
@@ -47,7 +47,7 @@
                             </h3>
                         </div>
                         <p
-                            class="text-gray-800 text-[18px] max-sm:text-[14px] font-semibold transition-colors duration-300 ">
+                            class="text-gray-800 text-[18px] max-sm:text-[14px] font-semibold transition-colors duration-300 line-clamp-3 overflow-hidden">
                             {{ $producto->name }}
                         </p>
                     </div>
