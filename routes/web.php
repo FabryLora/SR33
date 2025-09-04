@@ -4,10 +4,12 @@ use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\DescargarArchivo;
 use App\Http\Controllers\HomePages;
 use App\Http\Controllers\ImagenProductoController;
+use App\Http\Controllers\MailNewsletterController;
 use App\Http\Controllers\NovedadesController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SendContactInfoController;
+use App\Models\MailNewsletter;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,6 +31,8 @@ Route::get('/p/{codigo}', [ProductoController::class, 'show'])->name('producto')
 Route::get('/busqueda', [ProductoController::class, 'SearchProducts'])->name('searchproducts');
 
 Route::get('/cargar-imagenes', [ImagenProductoController::class, 'cargarImagenes'])->name('cargar.imagenes');
+
+Route::post('/newsletter/store/public', [MailNewsletterController::class, 'store'])->name('newsletter.store.public');
 # ------------------------------------------------------------------- #
 // Ruta para la API de búsqueda (AJAX)
 Route::post('/api/search', [SearchController::class, 'search'])

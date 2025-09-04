@@ -88,7 +88,7 @@
             </div>
 
             {{-- Formulario del newsletter --}}
-            <form id="newsletter-form" {{-- action="{{ route('newsletter.store') }}" --}} method="POST"
+            <form id="newsletter-form" action="{{ route('newsletter.store.public') }}" method="POST"
                 class="flex h-[44px] w-full items-center justify-between outline outline-white rounded-lg px-4 sm:w-[287px]">
                 @csrf
                 <input id="Email" name="email" type="email" required

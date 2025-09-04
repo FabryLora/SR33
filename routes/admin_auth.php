@@ -13,6 +13,7 @@ use App\Http\Controllers\ImportController;
 use App\Http\Controllers\InformacionDePagoController;
 use App\Http\Controllers\ListaDePreciosController;
 use App\Http\Controllers\LogosController;
+use App\Http\Controllers\MailNewsletterController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\MarcaProductoController;
 use App\Http\Controllers\MetadatosController;
@@ -175,6 +176,11 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('admin/informacion-de-pago', [InformacionDePagoController::class, 'index'])->name('admin.informacion-de-pago');
     Route::post('admin/informacion-de-pago', [InformacionDePagoController::class, 'update'])->name('admin.informacion-de-pago.update');
+
+    Route::get('admin/newsletter', [MailNewsletterController::class, 'index'])->name('admin.newsletter.index');
+    Route::post('admin/newsletter', [MailNewsletterController::class, 'store'])->name('admin.newsletter.store');
+    Route::post('admin/newsletter/update', [MailNewsletterController::class, 'update'])->name('admin.newsletter.update');
+    Route::delete('admin/newsletter/destroy', [MailNewsletterController::class, 'destroy'])->name('admin.newsletter.destroy');
 
     Route::get('/admin/dashboard', function () {
         if (!Auth::guard('admin')->check()) {
