@@ -2,7 +2,7 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm, usePage } from '@inertiajs/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import Switch from './Switch';
 
@@ -57,6 +57,10 @@ export default function ProductosAdminRow({ producto }) {
     const [existingImages, setExistingImages] = useState(producto.imagenes || []);
     const [newImagePreviews, setNewImagePreviews] = useState([]);
     const [imagesToDelete, setImagesToDelete] = useState([]);
+
+    useEffect(() => {
+        setExistingImages(producto.imagenes || []);
+    }, [producto]);
 
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files);

@@ -9,8 +9,9 @@ export default function CarritoAdmin() {
 
     const [text, setText] = useState(informacion?.text);
 
-    const { post, setData, processing } = useForm({
+    const { post, setData, processing, data } = useForm({
         text: '',
+        descuento_online: informacion?.descuento_online,
     });
 
     const handleUpdate = (e) => {
@@ -42,6 +43,21 @@ export default function CarritoAdmin() {
                         </label>
 
                         <CustomReactQuill onChange={setText} value={text} />
+                    </div>
+                </div>
+
+                <div className="flex flex-col gap-5">
+                    <div className="flex flex-col gap-4">
+                        <label htmlFor="title" className="block text-xl font-medium text-gray-900">
+                            Descuento online:
+                        </label>
+
+                        <input
+                            className="w-[200px] rounded-sm border bg-white py-2 pl-2"
+                            type="number"
+                            value={data.descuento_online}
+                            onChange={(e) => setData('descuento_online', Number(e.target.value))}
+                        />
                     </div>
                 </div>
 

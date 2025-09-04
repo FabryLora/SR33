@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 
 use App\Models\ImagenProducto;
+use App\Models\InformacionImportante;
 use App\Models\Marca;
 use App\Models\Metadatos;
 use App\Models\Modelo;
@@ -209,6 +210,7 @@ class ProductoController extends Controller
         $marcas = Marca::orderBy('order', 'asc')->get();
         $modelos = Modelo::orderBy('order', 'asc')->get();
         $userId = Auth::id();
+        $informacion = InformacionImportante::first();
 
         $productosOferta = Producto::whereHas('ofertas', function ($query) use ($userId) {
             $query->where('user_id', $userId)
@@ -238,6 +240,7 @@ class ProductoController extends Controller
             'code_sr' => $request->code_sr,
             'marcas' => $marcas,
             'modelos' => $modelos,
+            'informacion' => $informacion,
 
         ]);
     }

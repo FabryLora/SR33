@@ -8,7 +8,7 @@ import defaultImage from '../../images/logos/logo-sr33.png';
 /* import defaultPhoto from '../../images/defaultPhoto.png'; */
 
 export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) {
-    const { auth, ziggy, margenes } = usePage().props;
+    const { auth, ziggy, margenes, informacion } = usePage().props;
     const { user } = auth;
 
     const [cantidad, setCantidad] = useState(producto?.qty != 1 ? producto?.qty : producto?.unidad_pack);
@@ -123,9 +123,15 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                 )}
 
                 <p className="text-center text-green-500">
+                    {informacion?.descuento_online > 0 && (
+                        <span className="mr-1 text-red-500">
+                            {informacion.descuento_online}%
+                            {[user?.descuento_uno, user?.descuento_dos, user?.descuento_tres].filter((d) => d > 0).length > 0 && ' +'}
+                        </span>
+                    )}
                     {[user?.descuento_uno, user?.descuento_dos, user?.descuento_tres]
-                        .filter(Boolean)
-                        .map((descuento) => descuento + '%')
+                        .filter((d) => d > 0)
+                        .map((d) => `${d}%`)
                         .join(' + ')}
                 </p>
 
@@ -140,7 +146,8 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                                 (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
                                 (1 - Number(user?.descuento_uno) / 100) *
                                 (1 - Number(user?.descuento_dos) / 100) *
-                                (1 - Number(user?.descuento_tres) / 100)
+                                (1 - Number(user?.descuento_tres) / 100) *
+                                (1 - Number(informacion?.descuento_online) / 100)
                             ).toLocaleString('es-AR', {
                                 maximumFractionDigits: 2,
                                 minimumFractionDigits: 2,
@@ -155,6 +162,7 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                                 (1 - Number(user?.descuento_uno) / 100) *
                                 (1 - Number(user?.descuento_dos) / 100) *
                                 (1 - Number(user?.descuento_tres) / 100) *
+                                (1 - Number(informacion?.descuento_online) / 100) *
                                 cantidad
                             )?.toLocaleString('es-AR', {
                                 maximumFractionDigits: 2,
@@ -171,7 +179,8 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                                 cantidad *
                                 (1 - Number(user?.descuento_uno) / 100) *
                                 (1 - Number(user?.descuento_dos) / 100) *
-                                (1 - Number(user?.descuento_tres) / 100)
+                                (1 - Number(user?.descuento_tres) / 100) *
+                                (1 - Number(informacion?.descuento_online) / 100)
                             ).toLocaleString('es-AR', {
                                 maximumFractionDigits: 2,
                                 minimumFractionDigits: 2,
@@ -344,7 +353,8 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                                         (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
                                         (1 - Number(user?.descuento_uno) / 100) *
                                         (1 - Number(user?.descuento_dos) / 100) *
-                                        (1 - Number(user?.descuento_tres) / 100)
+                                        (1 - Number(user?.descuento_tres) / 100) *
+                                        (1 - Number(informacion?.descuento_online) / 100)
                                     ).toLocaleString('es-AR', {
                                         maximumFractionDigits: 2,
                                         minimumFractionDigits: 2,
@@ -359,6 +369,7 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                                         (1 - Number(user?.descuento_uno) / 100) *
                                         (1 - Number(user?.descuento_dos) / 100) *
                                         (1 - Number(user?.descuento_tres) / 100) *
+                                        (1 - Number(informacion?.descuento_online) / 100) *
                                         cantidad
                                     )?.toLocaleString('es-AR', {
                                         maximumFractionDigits: 2,
@@ -380,7 +391,8 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                                         cantidad *
                                         (1 - Number(user?.descuento_uno) / 100) *
                                         (1 - Number(user?.descuento_dos) / 100) *
-                                        (1 - Number(user?.descuento_tres) / 100)
+                                        (1 - Number(user?.descuento_tres) / 100) *
+                                        (1 - Number(informacion?.descuento_online) / 100)
                                     ).toLocaleString('es-AR', {
                                         maximumFractionDigits: 2,
                                         minimumFractionDigits: 2,

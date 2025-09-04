@@ -10,13 +10,11 @@ import DefaultLayout from '../defaultLayout';
 export default function Carrito({
     informacion,
     auth,
-    carrito,
+    descuento_online_total,
     productos,
     subtotal,
     iva,
-    descuento_uno,
-    descuento_dos,
-    descuento_tres,
+
     descuento,
     subtotal_descuento,
     total,
@@ -266,7 +264,7 @@ export default function Carrito({
                         {subtotal_descuento != subtotal && (
                             <div className="flex w-full flex-row justify-between">
                                 <p className="text-center text-green-500">
-                                    Descuento{' '}
+                                    Descuento cliente{' '}
                                     {[user?.descuento_uno, user?.descuento_dos, user?.descuento_tres]
                                         .filter(Boolean)
                                         .map((descuento) => descuento + '%')
@@ -275,6 +273,21 @@ export default function Carrito({
                                 <p className="text-green-500">
                                     -${' '}
                                     {Number(descuento)?.toLocaleString('es-AR', {
+                                        minimumFractionDigits: 2,
+                                        maximumFractionDigits: 2,
+                                    })}
+                                </p>
+                            </div>
+                        )}
+
+                        {informacion?.descuento_online > 0 && (
+                            <div className="flex w-full flex-row justify-between">
+                                <p className="text-center text-green-500">
+                                    Descuento online {informacion?.descuento_online > 0 && `${informacion.descuento_online}%`}
+                                </p>
+                                <p className="text-green-500">
+                                    -${' '}
+                                    {Number(descuento_online_total)?.toLocaleString('es-AR', {
                                         minimumFractionDigits: 2,
                                         maximumFractionDigits: 2,
                                     })}

@@ -60,6 +60,7 @@ export default function ClientesAdminRow({ cliente }) {
             });
         }
     };
+    console.log(cliente);
 
     return (
         <tr className={`border text-black odd:bg-gray-100 even:bg-white`}>
@@ -67,7 +68,7 @@ export default function ClientesAdminRow({ cliente }) {
             <td className="text-left">{cliente?.email}</td>
             <td className="text-left">{cliente?.provincia}</td>
             <td className="text-left">{cliente?.localidad}</td>
-            <td className="h-[90px] text-center">{cliente?.lista_de_precios_id}</td>
+            <td className="h-[90px] text-center">{listas?.find((item) => item.id === cliente?.lista_de_precios_id)?.name}</td>
             <td className="flex h-[90px] items-center justify-center">
                 <UserSwitch routeName="admin.clientes.autorizar" id={cliente?.id} status={cliente?.autorizado == 1} />
             </td>

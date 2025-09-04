@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('informacion_importantes', function (Blueprint $table) {
             $table->id();
             $table->longText('text')->nullable();
+            $table->unsignedInteger('descuento_online')->default(0);
             $table->timestamps();
         });
     }

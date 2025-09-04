@@ -132,6 +132,7 @@ Route::middleware('auth:admin')->group(function () {
 
         $data = $request->validate([
             'text' => 'required|string',
+            'descuento_online' => 'required|integer|min:0',
         ]);
 
         $informacion->update($data);

@@ -62,6 +62,7 @@ class   PrivadaController extends Controller
         $descuento_uno = auth()->user()->rol == "cliente" ? auth()->user()->descuento_uno : session('cliente_seleccionado')->descuento_uno ?? 0;
         $descuento_dos = auth()->user()->rol == "cliente" ? auth()->user()->descuento_dos : session('cliente_seleccionado')->descuento_dos ?? 0;
         $descuento_tres = auth()->user()->rol == "cliente" ? auth()->user()->descuento_tres : session('cliente_seleccionado')->descuento_tres ?? 0;
+        $descuento_online = InformacionImportante::first()->descuento_online ?? 0;
 
 
 
@@ -83,12 +84,18 @@ class   PrivadaController extends Controller
             $subtotal_descuento = $subtotal_descuento * (1 - ($descuento_tres / 100));
         }
 
+
+
+
         // Calcular el IVA (21% del subtotal con descuentos)
         $iva = $subtotal_descuento * 0.21;
 
-        $total = $subtotal_descuento + $iva;
+        $descuento_online_total = $subtotal_descuento * ($descuento_online / 100);
+
+        $total = $subtotal_descuento - $descuento_online_total + $iva;
 
         $descuento = $subtotalTotal - $subtotal_descuento;
+
 
         $categorias = Categoria::orderBy('order', 'asc')->get();
         $subcategorias = SubCategoria::orderBy('order', 'asc')->get();
@@ -104,6 +111,7 @@ class   PrivadaController extends Controller
             'descuento_uno' => $descuento_uno,
             'descuento_dos' => $descuento_dos,
             'descuento_tres' => $descuento_tres,
+            'descuento_online_total' => $descuento_online_total,
             'subtotal_descuento' => $subtotal_descuento,
             'iva' => $iva,
             'categorias' => $categorias,
