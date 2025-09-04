@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('code')->nullable();
             $table->string('code_sr')->nullable();
             $table->longText('desc')->nullable();
+            $table->string('ficha_tecnica')->nullable();
             $table->unsignedBigInteger('unidad_pack')->default(1);
             $table->boolean('destacado')->default(false);
             $table->foreignIdFor(Categoria::class)->nullable()

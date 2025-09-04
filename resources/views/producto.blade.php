@@ -33,7 +33,7 @@
                             class="  gap-2 flex flex-col  max-sm:static max-sm:mt-4 max-sm:justify-start max-sm:gap-1.5 max-sm:order-2">
                             @foreach ($producto->imagenes as $imagen)
                                 <div class="border border-gray-200 w-[78px] h-[78px] cursor-pointer hover:border-main-color rounded-sm max-sm:w-[60px] max-sm:h-[60px]
-                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $loop->first ? 'border-main-color' : '' }}"
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{ $loop->first ? 'border-main-color' : '' }}"
                                     onclick="changeMainImage('{{ $imagen->image }}', this)">
                                     <img src="{{ $imagen->image }}" alt="Thumbnail"
                                         class="w-full h-full object-cover rounded-sm">
@@ -84,11 +84,20 @@
 
 
                         </div>
+                        <div class="flex flex-row w-full gap-5">
+                            @if ($producto->ficha_tecnica)
+                                <a href="{{asset("storage/" . $producto->ficha_tecnica)}}"
+                                    download="ficha tecnica {{ $producto->code_sr }}"
+                                    class="w-full flex justify-center rounded-sm items-center  text-primary-orange border-primary-orange border font-bold h-[41px] max-sm:h-[36px] max-sm:text-sm">
+                                    Ficha tecnica
+                                </a>
+                            @endif
+                            <a href="{{ route('contacto', ['mensaje' => $producto->name]) }}"
+                                class="w-full flex justify-center rounded-sm items-center bg-primary-orange text-white font-bold h-[41px] max-sm:h-[36px] max-sm:text-sm">
+                                Consultar
+                            </a>
+                        </div>
 
-                        <a href="{{ route('contacto', ['mensaje' => $producto->name]) }}"
-                            class="w-full flex justify-center rounded-sm items-center bg-primary-orange text-white font-bold h-[41px] max-sm:h-[36px] max-sm:text-sm">
-                            Consultar
-                        </a>
                     </div>
                 </div>
 
@@ -102,7 +111,7 @@
                         @forelse($productosRelacionados as $prodRelacionado)
                             <a href="{{ "/p/" . $prodRelacionado->code_sr }}"
                                 class=" transition transform hover:-translate-y-1 hover:shadow-lg duration-300
-                                                                                                                                                                                                                                                        h-[420px]  flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
+                                                                                                                                                                                                                                                                                                h-[420px]  flex flex-col w-[288px] max-sm:w-full rounded-sm border border-[#DEDFE0]">
                                 <div class="h-full flex flex-col">
                                     @if ($prodRelacionado->imagenes->count() > 0)
                                         <div class="relative min-h-[287px] max-sm:h-[200px]">

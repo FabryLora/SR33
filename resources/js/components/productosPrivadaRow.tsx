@@ -125,7 +125,7 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                 <p className="text-center text-green-500">
                     {informacion?.descuento_online > 0 && (
                         <span className="mr-1 text-red-500">
-                            {informacion.descuento_online}%
+                            {informacion?.descuento_online}%
                             {[user?.descuento_uno, user?.descuento_dos, user?.descuento_tres].filter((d) => d > 0).length > 0 && ' +'}
                         </span>
                     )}
@@ -157,8 +157,6 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                             ${' '}
                             {(
                                 Number(Number(producto?.precio?.precio)) *
-                                (1 + Number(margenes?.general ?? 0) / 100) *
-                                (1 + Number(margenes?.tipos[producto?.categoria?.name] ?? 0) / 100) *
                                 (1 - Number(user?.descuento_uno) / 100) *
                                 (1 - Number(user?.descuento_dos) / 100) *
                                 (1 - Number(user?.descuento_tres) / 100) *

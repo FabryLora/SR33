@@ -258,6 +258,13 @@ export default function ProductosAdmin() {
                                             ))}
                                         </select>
 
+                                        <label>Ficha tecnica</label>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => setData('ficha_tecnica', e.target.files[0])}
+                                            className="file:bg-primary-orange w-full rounded border p-2 file:cursor-pointer file:rounded-full file:px-4 file:py-2 file:text-white"
+                                        />
+
                                         <label>Imágenes del Producto</label>
                                         <input
                                             type="file"

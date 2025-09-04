@@ -389,6 +389,7 @@ class ProductoController extends Controller
             'code_sr' => 'nullable|sometimes|string|max:255',
             'desc' => 'nullable|string',
             'unidad_pack' => 'nullable|integer',
+            'ficha_tecnica' => 'nullable|sometimes|file',
             'destacado' => 'nullable|sometimes|boolean',
             'categoria_id' => 'nullable|exists:categorias,id',
             'marca_id' => 'nullable|exists:marcas,id',
@@ -414,6 +415,10 @@ class ProductoController extends Controller
                 ]);
 
                 $createdImages = [];
+
+                if ($request->hasFile('ficha_tecnica')) {
+                    $data['ficha_tecnica'] = $request->file('ficha_tecnica')->store('images', 'public');
+                }
 
                 // Procesar imágenes si existen
                 if ($request->hasFile(key: 'images')) {
@@ -444,6 +449,7 @@ class ProductoController extends Controller
 
     public function update(Request $request)
     {
+
         $data = $request->validate([
             // Validaciones del producto
 
@@ -457,7 +463,7 @@ class ProductoController extends Controller
             'categoria_id' => 'nullable|exists:categorias,id',
             'marca_id' => 'nullable|exists:marcas,id',
             'modelo_id' => 'nullable|exists:modelos,id',
-
+            'ficha_tecnica' => 'nullable|sometimes|file',
             // Validaciones de las imágenes (opcionales)
             'images' => 'nullable|array|min:1',
             'images.*' => 'required|file|image',
@@ -466,13 +472,15 @@ class ProductoController extends Controller
             'delete_images.*' => 'integer|exists:imagen_productos,id',
         ]);
 
+
+
         try {
             return DB::transaction(function () use ($request, $data) {
                 // Buscar el producto
                 $producto = Producto::findOrFail($request->id);
 
                 // Actualizar los datos del producto
-                $producto->update([
+                $newData = [
                     'order' => $data['order'] ?? 'zzz',
                     'name' => $data['name'],
                     'code' => $data['code'],
@@ -483,7 +491,19 @@ class ProductoController extends Controller
                     'categoria_id' => $data['categoria_id'] ?? null,
                     'marca_id' => $data['marca_id'] ?? null,
                     'modelo_id' => $data['modelo_id'] ?? null,
-                ]);
+                ];
+
+                if ($request->hasFile('ficha_tecnica')) {
+                    if ($producto->getRawOriginal('ficha_tecnica')) {
+                        Storage::disk('public')->delete($producto->getRawOriginal('ficha_tecnica'));
+                    }
+                    $newData['ficha_tecnica'] = $request->file('ficha_tecnica')->store('images', 'public');
+                }
+
+
+                $producto->update($newData);
+
+
 
                 if ($request->has('images_to_delete')) {
                     foreach ($request->images_to_delete as $imageId) {
