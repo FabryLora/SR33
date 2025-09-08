@@ -71,7 +71,6 @@ export default function Dashboard({ children }) {
                 { title: 'Marcas', href: 'marcas' },
                 { title: 'Modelos', href: 'modelos' },
                 { title: 'Productos', href: 'productos' },
-                { title: 'Lista de precios', href: 'listadeprecios' },
             ],
         },
         {
@@ -114,6 +113,7 @@ export default function Dashboard({ children }) {
                 { title: 'Clientes', href: 'clientes' },
                 { title: 'Pedidos', href: 'pedidos' },
                 { title: 'Carrito', href: 'carrito' },
+                { title: 'Lista de precios', href: 'listadeprecios' },
             ],
         },
         {

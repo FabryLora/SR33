@@ -61,7 +61,7 @@ export default function ArchivoCalidadAdminRow({ archivo }) {
 
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'Catalogo'; // Descargar con el nombre original
+            a.download = archivo?.name ?? 'Lista'; // Descargar con el nombre original
             document.body.appendChild(a);
             a.click();
 
@@ -156,7 +156,7 @@ export default function ArchivoCalidadAdminRow({ archivo }) {
                                     <div className="flex flex-row">
                                         <input
                                             type="file"
-                                            name="imagen"
+                                            name="archivo"
                                             id="archivo"
                                             onChange={(e) => updateForm.setData('archivo', e.target.files[0])}
                                             className="hidden"

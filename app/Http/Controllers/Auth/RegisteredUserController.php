@@ -35,7 +35,7 @@ class RegisteredUserController extends Controller
             'email_dos' => "nullable|sometimes|string|email|max:255",
             'email_tres' => "nullable|sometimes|string|email|max:255",
             'email_cuatro' => "nullable|sometimes|string|email|max:255",
-            "password" => "required|confirmed|string|min:8",
+            "password" => "required|confirmed",
             'cuit' => 'required|string|max:20',
             'razon_social' => 'nullable|sometimes|string|max:255',
             'direccion' => 'nullable|string|max:255',

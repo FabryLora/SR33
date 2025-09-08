@@ -92,7 +92,7 @@ export default function MarcasAdmin() {
                                         <div className="flex flex-row">
                                             <input
                                                 type="file"
-                                                name="imagen"
+                                                name="archivo"
                                                 id="archivo"
                                                 onChange={(e) => setData('archivo', e.target.files[0])}
                                                 className="hidden"

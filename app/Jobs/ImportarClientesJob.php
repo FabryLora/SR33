@@ -42,75 +42,45 @@ class ImportarClientesJob implements ShouldQueue
 
         foreach ($rows as $index => $row) {
 
-            if ($index === 0 || trim($row['S']) == 'LISTA') {
+            if ($index === 0 || trim($row['G']) == 'CUIT') {
                 Log::info('Saltando encabezado');
                 continue;
             }
 
-            $razon = trim($row['C']);
-            $email_dos = trim($row['D']);
-            $email_tres = trim($row['E']);
-            $email_cuatro = trim($row['F']);
-            $email = trim($row['G']);
-            $name = trim($row['H']);
-            $direccion = trim($row['I']);
-            $cuit = trim($row['J']);
-            $telefono = trim($row['K']);
-            $provincia = trim($row['L']);
-            $localidad = trim($row['M']);
-            $descuento_uno = trim($row['N']);
-            $descuento_dos = trim($row['O']);
-            $descuento_tres = trim($row['P']);
-            $sucursales = trim($row['Q']);
-            $vendedor = trim($row['R']);
-            $lista = trim($row['S']);
-            $activo = trim($row['T']);
+            $razon = trim($row['B']);
+            $domicilio = trim($row['C']);
+            $localidad = trim($row['D']);
+            $provincia = trim($row['E']);
+            $telefono = trim($row['F']);
+            $cuit = trim($row['G']);
+            $email = trim($row['H']);
+            $descuento_uno = (int) trim($row['I']);
+            $nombre_lista = trim($row['J']);
+            $pass = trim($row['L']);
 
-            $lista_id = ListaDePrecios::where('name', $lista)->value('id');
-
-            if (!empty($vendedor)) {
-                $vendedor_record = User::where('name', $vendedor)->first();
-                $vendedor_id = $vendedor_record ? $vendedor_record->id : null;
+            if (!empty($nombre_lista)) {
+                $lista_id = ListaDePrecios::where('name', $nombre_lista)->value('id');
+            } else {
+                $lista_id = ListaDePrecios::where('name', 'MAYORISTA')->value('id');
             }
 
+            $password_final = !empty($pass) ? bcrypt($pass) : bcrypt(trim($cuit));
+
             $user = User::updateOrCreate([
-                'name' => $name,
+                'name' => $razon,
                 'email' => $email,
-                'password' => bcrypt(trim($cuit)),
-                'email_dos' => $email_dos,
-                'email_tres' => $email_tres,
-                'email_cuatro' => $email_cuatro,
+                'password' => $password_final,
                 'razon_social' => $razon,
                 'cuit' => $cuit,
-                'direccion' => $direccion,
+                'direccion' => $domicilio,
                 'provincia' => $provincia,
                 'localidad' => $localidad,
                 'telefono' => $telefono,
-                'descuento_uno' => $descuento_uno,
-                'descuento_dos' => $descuento_dos,
-                'descuento_tres' => $descuento_tres,
-                'lista_de_precios_id' => $lista ? $lista_id : null,
-                'vendedor_id' => $vendedor ? $vendedor_id : null,
-                'rol' => 'cliente',
+                'descuento_uno' => $descuento_uno ?? 0,
+                'lista_de_precios_id' => $lista_id,
                 'autorizado' => true,
 
             ]);
-
-            #sucursales es un string donde estan los nombres de las sucursales separados por una coma
-            if (!empty($sucursales)) {
-                $sucursales_array = array_filter(array_map('trim', explode(',', $sucursales)));
-                foreach ($sucursales_array as $sucursal) {
-                    if (empty($sucursal)) continue;
-
-                    $sucursal_selected = Sucursal::where('name', $sucursal)->first();
-                    if ($sucursal_selected) {
-                        SucursalCliente::firstOrCreate([
-                            'user_id' => $user->id,
-                            'sucursal_id' => $sucursal_selected->id
-                        ]);
-                    }
-                }
-            };
         }
     }
 }
