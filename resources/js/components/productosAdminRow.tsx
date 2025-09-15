@@ -280,6 +280,7 @@ export default function ProductosAdminRow({ producto }) {
                                     />
 
                                     <label>Imágenes del Producto</label>
+                                    <p>Resolucion recomendada: 287px x 287px</p>
                                     <input
                                         type="file"
                                         multiple

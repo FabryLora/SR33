@@ -171,19 +171,17 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                 ) : (
                     <p className="text-right">
                         ${' '}
-                        {user?.descuento_uno ||
-                            (informacion?.descuento_online &&
-                                (
-                                    Number(producto?.precio?.precio) *
-                                    cantidad *
-                                    (1 - Number(user?.descuento_uno) / 100) *
-                                    (1 - Number(user?.descuento_dos) / 100) *
-                                    (1 - Number(user?.descuento_tres) / 100) *
-                                    (1 - Number(informacion?.descuento_online) / 100)
-                                ).toLocaleString('es-AR', {
-                                    maximumFractionDigits: 2,
-                                    minimumFractionDigits: 2,
-                                }))}
+                        {(
+                            Number(producto?.precio?.precio) *
+                            cantidad *
+                            (1 - Number(user?.descuento_uno) / 100) *
+                            (1 - Number(user?.descuento_dos) / 100) *
+                            (1 - Number(user?.descuento_tres) / 100) *
+                            (1 - Number(informacion?.descuento_online) / 100)
+                        ).toLocaleString('es-AR', {
+                            maximumFractionDigits: 2,
+                            minimumFractionDigits: 2,
+                        })}
                     </p>
                 )}
 

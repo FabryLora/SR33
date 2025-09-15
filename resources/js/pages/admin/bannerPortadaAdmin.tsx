@@ -67,6 +67,7 @@ export default function BannerPortadaAdmin() {
                             <label htmlFor="logoprincipal" className="block text-lg font-medium text-gray-900">
                                 Imagen
                             </label>
+                            <p>Resolucion recomendada: 670px x 600px</p>
                             <div className="mt-2 flex justify-between rounded-lg border shadow-lg">
                                 <div className="h-[200px] w-1/2 bg-[rgba(0,0,0,0.2)]">
                                     <img className="h-full w-full rounded-md object-cover" src={banner?.image} alt="" />
