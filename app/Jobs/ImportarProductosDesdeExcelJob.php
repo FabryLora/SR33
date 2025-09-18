@@ -5,9 +5,13 @@ namespace App\Jobs;
 use App\Models\Categoria;
 use App\Models\ListaProductos;
 use App\Models\Marca;
+use App\Models\MarcaHelper;
+use App\Models\MarcaModelo;
 use App\Models\Modelo;
 use App\Models\ModeloProducto;
 use App\Models\Producto;
+use App\Models\ProductoCategoria;
+use App\Models\ProductoMarca;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -46,7 +50,7 @@ class ImportarProductosDesdeExcelJob implements ShouldQueue
                 continue;
             }
 
-            if (empty($row) || !isset($row['A']) || !isset($row['B'])) {
+            if (empty($row) || !isset($row['A']) || trim($row['C']) == "Producto") {
                 Log::info("Fila {$index} vacía o incompleta");
                 continue;
             }
@@ -69,6 +73,15 @@ class ImportarProductosDesdeExcelJob implements ShouldQueue
             $modelos = array_values(array_unique(array_filter($partes, fn($m) => $m !== '')));
 
 
+            $marcasHelpers = MarcaHelper::where('code', $subcategoria_code)->first() ?? null;
+            if ($marcasHelpers == null) {
+                continue;
+            }
+            $marcaUltima = Marca::where('name', $marcasHelpers->name)->first()->id ?? null;
+
+            if ($marcaUltima == null) {
+                continue;
+            }
 
             $producto = Producto::updateOrCreate([
                 'code_sr' => $codigo_sr
@@ -77,22 +90,51 @@ class ImportarProductosDesdeExcelJob implements ShouldQueue
                 'desc' => $desc,
                 'code' => $codigo_original,
                 'categoria_id' => Categoria::where('code', $categoria_code)->first()->id ?? null,
-                'marca_id' => Marca::where('code', $subcategoria_code)->first()->id ?? null,
+                'marca_id' => $marcaUltima,
             ]);
 
 
             if ($modelos && $producto) {
+
                 foreach ($modelos as $modelo) {
-                    $modelo_id = Modelo::where('name', $modelo)->first()->id ?? null;
-                    if ($modelo_id != null) {
-                        ModeloProducto::firstOrCreate(
+                    $modelo_nuevo = Modelo::updateOrCreate(
+                        ['name' => $modelo],
+                        ['name' => $modelo, 'marca_id' => $marcaUltima],
+
+                    );
+                    if ($modelo_nuevo) {
+                        ModeloProducto::updateOrCreate(
                             [
                                 'producto_id' => $producto->id,
-                                'modelo_id' => $modelo_id
+                                'modelo_id' => $modelo_nuevo->id
                             ]
                         );
                     }
                 }
+            }
+
+            if ($producto) {
+                ProductoCategoria::updateOrCreate(
+                    [
+                        'producto_id' => $producto->id,
+                        'categoria_id' => $producto->categoria_id
+                    ],
+                    [
+                        'producto_id' => $producto->id,
+                        'categoria_id' => $producto->categoria_id
+                    ]
+                );
+
+                ProductoMarca::updateOrCreate(
+                    [
+                        'producto_id' => $producto->id,
+                        'marca_id' => $marcaUltima
+                    ],
+                    [
+                        'producto_id' => $producto->id,
+                        'marca_id' => $marcaUltima
+                    ]
+                );
             }
         }
 

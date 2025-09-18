@@ -2,7 +2,6 @@
 
 use App\Models\Categoria;
 use App\Models\Marca;
-use App\Models\Producto;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,14 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('producto_marcas', function (Blueprint $table) {
+        Schema::create('categoria_marcas', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Producto::class, 'producto_id')
-                ->constrained('productos')
-                ->cascadeOnDelete();
-            $table->foreignIdFor(Marca::class, 'marca_id')
-                ->constrained('marcas')
-                ->cascadeOnDelete();
+            $table->foreignIdFor(Categoria::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Marca::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('producto_marcas');
+        Schema::dropIfExists('categoria_marcas');
     }
 };

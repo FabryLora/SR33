@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductoMarca extends Model
+class ProductoCategoria extends Model
 {
     protected $guarded = [];
 
@@ -13,8 +13,8 @@ class ProductoMarca extends Model
         return $this->belongsTo(Producto::class);
     }
 
-    public function marca()
+    public function categoria()
     {
-        return $this->belongsTo(Marca::class);
+        return $this->belongsTo(Categoria::class);
     }
 }

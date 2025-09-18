@@ -33,7 +33,7 @@ class ProductoController extends Controller
         $marcas = Marca::orderBy('order', 'asc')->get();
         $perPage = $request->input('per_page', default: 10);
 
-        $query = Producto::query()->orderBy('order', 'asc')->with(['marca', 'modelos', 'categoria', 'imagenes']);
+        $query = Producto::query()->orderBy('order', 'asc')->with(['marcas', 'modelos', 'categoria', 'imagenes']);
 
         if ($request->has('search') && !empty($request->search)) {
             $searchTerm = $request->search;
@@ -86,7 +86,7 @@ class ProductoController extends Controller
         $query->orderBy('order', 'asc');
 
         // Ejecutar query con paginación
-        $productos = $query->with(['marca', 'modelos', 'imagenes', 'categoria'])
+        $productos = $query->with(['marcas', 'modelos', 'imagenes', 'categorias'])
             ->paginate(16)
             ->appends($request->query());
 
@@ -96,9 +96,9 @@ class ProductoController extends Controller
         } */
 
         // Cargar datos adicionales para la vista
-        $categorias = Categoria::with('subCategorias')->orderBy('order', 'asc')->get();
-        $marcas = Marca::orderBy('order', 'asc')->get();
-        $modelos = Modelo::orderBy('order', 'asc')->get();
+        $categorias = Categoria::with(['subCategorias', 'marcas'])->orderBy('order', 'asc')->get();
+        $marcas = Marca::orderBy('order', 'asc')->with('modelos')->get();
+        $modelos = Modelo::orderBy('order', 'asc')->with('marca')->get();
 
         return view('productos', [
             'categorias' => $categorias,

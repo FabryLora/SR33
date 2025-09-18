@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Marca;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('modelos', function (Blueprint $table) {
+        Schema::create('marca_helpers', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
             $table->string('order')->default('zzz');
-            $table->foreignIdFor(Marca::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('modelos');
+        Schema::dropIfExists('marca_helpers');
     }
 };

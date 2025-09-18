@@ -12,6 +12,10 @@ class Producto extends Model
         return $this->belongsTo(Categoria::class, 'categoria_id');
     }
 
+    public function categorias()
+    {
+        return $this->belongsToMany(Categoria::class, 'producto_categorias');
+    }
 
 
     public function modelos()
@@ -23,9 +27,9 @@ class Producto extends Model
             'modelo_id'          // FK de modelo en la pivote
         );
     }
-    public function marca()
+    public function marcas()
     {
-        return $this->belongsTo(Marca::class);
+        return $this->belongsToMany(Marca::class, 'producto_marcas');
     }
 
     public function imagenes()

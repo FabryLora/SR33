@@ -6,6 +6,8 @@
             marcaSeleccionada: '{{ request("marca") }}' || '',
             modeloSeleccionado: '{{ request("modelo") }}' || '',
 
+            categorias: @js($categorias),
+
             marcas: @js($marcas),
             // 👇 Asegurate de pasar $modelos como array con {id, name, marca_id}
             modelos: @js($modelos),
@@ -24,7 +26,7 @@
 
             get marcasFiltradas() {
                 if (!this.categoriaSeleccionada) return this.marcas;
-                return this.marcas.filter(m => m.categoria_id == this.categoriaSeleccionada);
+                return this.categorias.find((car) => car.id == this.categoriaSeleccionada)?.marcas || [];
             },
 
             // 🔹 Modelos filtrados por marca seleccionada
@@ -35,6 +37,8 @@
         }));
     });
 </script>
+
+
 
 
 <!-- 🔹 Envolver el formulario (o al menos los selects) con x-data -->

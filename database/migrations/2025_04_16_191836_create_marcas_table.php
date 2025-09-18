@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('order')->default('zzz');
             $table->string('code')->nullable();
-            $table->foreignIdFor(Categoria::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

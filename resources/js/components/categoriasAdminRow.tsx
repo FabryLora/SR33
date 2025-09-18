@@ -48,7 +48,9 @@ export default function CategoriasAdminRow({ categoria }) {
         <tr className={`border text-black odd:bg-gray-100 even:bg-white`}>
             <td className="align-middle">{categoria?.order}</td>
             <td className="h-[90px] align-middle">{categoria?.name}</td>
-
+            <td className="max-w-[300px]">
+                <div className="text-[15px] font-medium">{categoria?.marcas?.map((marca) => <span key={marca.id}>{marca.name}, </span>)}</div>
+            </td>
             <td className="w-[140px] text-center">
                 <div className="flex flex-row justify-center gap-3">
                     <button onClick={() => setEdit(true)} className="h-10 w-10 rounded-md border border-blue-500 px-2 py-1 text-white">

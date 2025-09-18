@@ -18,7 +18,7 @@ class MarcaController extends Controller
 
         $perPage = $request->input('per_page', 10);
 
-        $query = Marca::query()->with('categoria')->orderBy('order', 'asc');
+        $query = Marca::query()->with(['categoria', 'modelos'])->orderBy('order', 'asc');
 
         if ($request->has('search') && !empty($request->search)) {
             $searchTerm = $request->search;

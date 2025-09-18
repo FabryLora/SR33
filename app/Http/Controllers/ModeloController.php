@@ -46,7 +46,7 @@ class ModeloController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'order' => 'nullable|string|max:255',
-            'marca_id' => 'nullable|exists:marcas,id',
+            'marca_id' => 'required|exists:marcas,id',
         ]);
 
         Modelo::create($data);
@@ -69,7 +69,7 @@ class ModeloController extends Controller
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'order' => 'nullable|string|max:255',
-            'marca_id' => 'nullable|exists:marcas,id',
+            'marca_id' => 'required|exists:marcas,id',
         ]);
 
         $modelo->update($data);

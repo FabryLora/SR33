@@ -20,6 +20,6 @@ class Categoria extends Model
 
     public function marcas()
     {
-        return $this->hasMany(Marca::class)->orderBy('order');
+        return $this->belongsToMany(Marca::class, 'categoria_marcas');
     }
 }

@@ -16,7 +16,7 @@ class CategoriaController extends Controller
 
         $perPage = $request->input('per_page', 10);
 
-        $query = Categoria::query()->orderBy('order', direction: 'asc');
+        $query = Categoria::query()->with('marcas')->orderBy('order', direction: 'asc');
 
         if ($request->has('search') && !empty($request->search)) {
             $searchTerm = $request->search;

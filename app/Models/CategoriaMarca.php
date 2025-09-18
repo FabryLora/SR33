@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductoMarca extends Model
+class CategoriaMarca extends Model
 {
     protected $guarded = [];
 
-    public function producto()
+    public function categoria()
     {
-        return $this->belongsTo(Producto::class);
+        return $this->belongsTo(Categoria::class);
     }
 
     public function marca()

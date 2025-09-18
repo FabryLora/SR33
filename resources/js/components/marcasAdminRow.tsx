@@ -51,7 +51,9 @@ export default function MarcasAdminRow({ marca }) {
         <tr className={`border text-black odd:bg-gray-100 even:bg-white`}>
             <td className="align-middle">{marca?.order}</td>
             <td className="h-[90px] align-middle">{marca?.name}</td>
-            <td className="h-[90px] align-middle">{marca?.categoria?.name}</td>
+            <td className="max-w-[100px]">
+                <div className="text-[15px] font-medium">{marca?.modelos?.map((modelo) => <span key={modelo.id}>{modelo.name}, </span>)}</div>
+            </td>
 
             <td className="w-[140px] text-center">
                 <div className="flex flex-row justify-center gap-3">

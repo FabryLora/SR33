@@ -147,7 +147,7 @@ export default function CategoriasAdmin() {
                                 <tr>
                                     <td className="text-center">ORDEN</td>
                                     <td className="py-2 text-center">NOMBRE</td>
-
+                                    <td className="py-2 text-center">MARCAS</td>
                                     <td className="text-center">EDITAR</td>
                                 </tr>
                             </thead>

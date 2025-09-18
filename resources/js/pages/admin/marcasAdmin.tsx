@@ -96,24 +96,6 @@ export default function MarcasAdmin() {
                                             onChange={(e) => setData('name', e.target.value)}
                                         />
 
-                                        <label htmlFor="nombree">
-                                            Tipo de producto <span className="text-red-500">*</span>
-                                        </label>
-
-                                        <select
-                                            onChange={(e) => setData('categoria_id', e.target.value)}
-                                            className="focus:outline-primary-orange rounded-md p-2 outline outline-gray-300 focus:outline"
-                                            name=""
-                                            id=""
-                                        >
-                                            <option value="">Seleccionar un tipo de producto</option>
-                                            {categorias.map((categoria) => (
-                                                <option key={categoria.id} value={categoria.id}>
-                                                    {categoria.name}
-                                                </option>
-                                            ))}
-                                        </select>
-
                                         <div className="flex justify-end gap-4">
                                             <button
                                                 type="button"
@@ -165,7 +147,7 @@ export default function MarcasAdmin() {
                                 <tr>
                                     <td className="text-center">ORDEN</td>
                                     <td className="py-2 text-center">NOMBRE</td>
-                                    <td className="py-2 text-center">TIPO DE PRODUCTO</td>
+                                    <td className="py-2 text-center">MODELOS</td>
                                     <td className="text-center">EDITAR</td>
                                 </tr>
                             </thead>
