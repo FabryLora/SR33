@@ -4,6 +4,8 @@ import { useEffect } from 'react';
 const SearchBar = () => {
     const { categorias, marcas, modelos, filters } = usePage().props;
 
+    console.log(categorias);
+
     const { data, setData, get } = useForm({
         tipo: filters?.tipo || '',
         marca: filters?.marca || '',
@@ -122,9 +124,9 @@ const SearchBar = () => {
                                     onChange={(e) => setData('marca', e.target.value)}
                                 >
                                     <option value="">Elegir marca</option>
-                                    {marcas
-                                        ?.filter((marc) => !data.tipo || marc?.categoria_id == data.tipo)
-                                        ?.map((marca) => (
+                                    {categorias
+                                        ?.find((cat) => cat.id == data.tipo)
+                                        ?.marcas?.map((marca) => (
                                             <option key={marca.id} value={marca.id}>
                                                 {marca.name}
                                             </option>
@@ -148,9 +150,9 @@ const SearchBar = () => {
                                     onChange={(e) => setData('modelo', e.target.value)}
                                 >
                                     <option value="">Elegir modelo</option>
-                                    {modelos
-                                        ?.filter((mod) => !data.marca || mod?.marca_id == data.marca)
-                                        ?.map((modelo) => (
+                                    {marcas
+                                        ?.find((marca) => marca?.id == data.marca)
+                                        ?.modelos?.map((modelo) => (
                                             <option key={modelo.id} value={modelo.id}>
                                                 {modelo.name}
                                             </option>

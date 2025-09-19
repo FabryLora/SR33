@@ -142,7 +142,7 @@ class ProductoController extends Controller
         $qty = $request->input('qty', 1); // Valor por defecto para qty
         $carrito = Cart::content();
 
-        $query = Producto::with(['imagenes', 'marca', 'modelos', 'precio', 'categoria'])->orderBy('order', 'asc');
+        $query = Producto::with(['imagenes', 'marcas', 'modelos', 'precio', 'categoria'])->orderBy('order', 'asc');
 
         if ($request->filled('tipo')) {
             $query->where('categoria_id', $request->tipo);
@@ -206,8 +206,8 @@ class ProductoController extends Controller
         });
         # si el usuario es vendedor
 
-        $categorias = Categoria::orderBy('order', 'asc')->get();
-        $marcas = Marca::orderBy('order', 'asc')->get();
+        $categorias = Categoria::orderBy('order', 'asc')->with('marcas')->get();
+        $marcas = Marca::orderBy('order', 'asc')->with('modelos')->get();
         $modelos = Modelo::orderBy('order', 'asc')->get();
         $userId = Auth::id();
         $informacion = InformacionImportante::first();

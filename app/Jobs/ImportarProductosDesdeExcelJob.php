@@ -110,6 +110,15 @@ class ImportarProductosDesdeExcelJob implements ShouldQueue
                             ]
                         );
                     }
+
+                    if ($modelo_nuevo) {
+                        MarcaModelo::updateOrCreate(
+                            [
+                                'marca_id' => $marcaUltima,
+                                'modelo_id' => $modelo_nuevo->id
+                            ]
+                        );
+                    }
                 }
             }
 

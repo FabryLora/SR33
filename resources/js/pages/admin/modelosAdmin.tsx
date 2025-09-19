@@ -164,8 +164,8 @@ export default function ModelosAdmin() {
                                 <tr>
                                     <td className="text-center">ORDEN</td>
                                     <td className="text-center">MODELO</td>
-                                    <td className="py-2 text-center">MARCA</td>
-                                    <td className="text-center">EDITAR</td>
+
+                                    <td className="py-2 text-center">EDITAR</td>
                                 </tr>
                             </thead>
                             <tbody className="text-center">

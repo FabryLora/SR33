@@ -32,7 +32,7 @@
             // 🔹 Modelos filtrados por marca seleccionada
             get modelosFiltrados() {
                 if (!this.marcaSeleccionada) return [];
-                return this.modelos.filter(mod => mod.marca_id == this.marcaSeleccionada);
+                return this.marcas.find(marca => marca.id == this.marcaSeleccionada)?.modelos || [];
             },
         }));
     });

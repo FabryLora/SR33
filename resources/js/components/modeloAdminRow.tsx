@@ -50,9 +50,7 @@ export default function ModeloAdminRow({ modelo }) {
     return (
         <tr className={`border text-black odd:bg-gray-100 even:bg-white`}>
             <td className="align-middle">{modelo?.order}</td>
-            <td className="align-middle">{modelo?.name}</td>
-
-            <td className="h-[90px]">{modelo?.marca?.name}</td>
+            <td className="h-[90px] align-middle">{modelo?.name}</td>
 
             <td className="w-[140px] text-center">
                 <div className="flex flex-row justify-center gap-3">
@@ -96,24 +94,6 @@ export default function ModeloAdminRow({ modelo }) {
                                         value={updateForm?.data?.name}
                                         onChange={(e) => updateForm.setData('name', e.target.value)}
                                     />
-
-                                    <label htmlFor="marca_id">
-                                        Marca <span className="text-red-500">*</span>
-                                    </label>
-                                    <select
-                                        className="focus:outline-primary-orange rounded-md p-2 outline outline-gray-300 focus:outline"
-                                        name="marca_id"
-                                        id="marca_id"
-                                        value={updateForm?.data?.marca_id}
-                                        onChange={(e) => updateForm.setData('marca_id', e.target.value)}
-                                    >
-                                        <option value="">Seleccione una categoria</option>
-                                        {marcas.map((marca) => (
-                                            <option key={marca.id} value={marca.id}>
-                                                {marca.name}
-                                            </option>
-                                        ))}
-                                    </select>
 
                                     <div className="flex justify-end gap-4">
                                         <button

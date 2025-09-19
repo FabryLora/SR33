@@ -25,6 +25,6 @@ class Marca extends Model
 
     public function modelos()
     {
-        return $this->hasMany(Modelo::class)->orderBy('order', 'asc');
+        return $this->belongsToMany(Modelo::class, 'marca_modelos');
     }
 }

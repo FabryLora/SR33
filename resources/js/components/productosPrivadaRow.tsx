@@ -84,7 +84,7 @@ export default function ProductosPrivadaRow({ producto, margenSwitch, margen }) 
                 </div>
                 <p className="">{producto?.code_sr}</p>
                 <p className="">{producto?.code}</p>
-                <p className="">{producto?.marca?.name}</p>
+                <p className="">{producto?.marcas?.map((marca) => marca.name).join(', ')}</p>
                 <div className="flex flex-col items-center justify-center gap-2">
                     {producto?.modelos?.map((modelo) => <span key={modelo.id}>{modelo.name} </span>)}
                 </div>
